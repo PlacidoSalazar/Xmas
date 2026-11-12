@@ -361,8 +361,9 @@ La noche, a medida.</p></header>
   const D = { bg:[15,14,13],   fg:[243,242,240], fg2:[168,164,158] };
   const mix = (a,b,t) => a.map((v,i) => Math.round(v + (b[i]-v)*t));
   const rgb = a => `rgb(${a.join(',')})`;
-  const ramp = 160; // px of scroll the fade takes (corto: que el gris casi no se vea)
+  const ramp = 420; // px de scroll que dura el fundido blanco → negro (más largo = más suave)
   const smooth = t => t*t*(3-2*t);
+  const smoother = t => t*t*t*(t*(t*6-15)+10); // arranque y llegada más suaves que smooth
   const feats = [...document.querySelectorAll('[data-parallax]')];
 
   function frame(){
@@ -370,7 +371,7 @@ La noche, a medida.</p></header>
     const r = dark.getBoundingClientRect();
     const tin  = Math.min(1, Math.max(0, (mid - r.top) / ramp + 0.5));
     const tout = Math.min(1, Math.max(0, (r.bottom - (vh - 80)) / 160)); // vuelve a blanco cuando la última foto ya ha terminado (empieza en vh+80, acaba en vh-80)
-    const t = smooth(Math.min(tin, tout));
+    const t = Math.min(smoother(tin), smooth(tout));
     root.setProperty('--bg',  rgb(mix(L.bg,  D.bg,  t)));
     root.setProperty('--fg',  rgb(mix(L.fg,  D.fg,  t)));
     root.setProperty('--fg2', rgb(mix(L.fg2, D.fg2, t)));
