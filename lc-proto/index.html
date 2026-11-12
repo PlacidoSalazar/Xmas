@@ -42,8 +42,8 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 .hero h1{font-weight:800;font-size:24px;line-height:28px;text-transform:uppercase}
 .hero p{font-size:14px;line-height:19px;margin-top:8px}
 .hero .copy>*{opacity:0;transform:translateY(14px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
-.hero.in .copy h1{opacity:1;transform:none;transition-delay:.7s}
-.hero.in .copy p{opacity:1;transform:none;transition-delay:.9s}
+.hero.in .copy h1{opacity:1;transform:none;transition-delay:.35s}
+.hero.in .copy p{opacity:1;transform:none;transition-delay:.6s}
 
 /* ---------- sections ---------- */
 .sec{margin-top:var(--gap)}
@@ -348,8 +348,10 @@ La noche, a medida.</p></header>
     // stagger siblings inside the same row
     const sibs = [...el.parentElement.children].filter(c => c.classList.contains('rv'));
     el.style.transitionDelay = (sibs.indexOf(el) * 0.12) + 's';
-    io.observe(el);
   });
+  // orden: primero el texto del hero, después los módulos (stagger)
+  const startReveal = () => document.querySelectorAll('.rv').forEach(el => io.observe(el));
+  setTimeout(startReveal, reduce ? 0 : 1700);
 
   // White → dark → white, driven by scroll
   const dark = document.getElementById('dark');
