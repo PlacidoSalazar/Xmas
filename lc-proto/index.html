@@ -12,7 +12,7 @@
   --bg:#fefdfb; --fg:#181716; --fg2:#6e6c69;
   --light-bg:#fefdfb; --light-fg:#181716; --light-fg2:#6e6c69;
   --gap:140px;
-  --ease:cubic-bezier(.22,.61,.36,1);
+  --ease:cubic-bezier(.16,.84,.3,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{background:#e4e3e1}
@@ -36,7 +36,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 
 /* ---------- hero ---------- */
 .hero{height:810px;margin-top:-96px;position:relative;overflow:hidden;color:#fefdfb}
-.hero .media{position:absolute;inset:0;transform:scale(1.08);transition:transform 2.4s var(--ease)}
+.hero .media{position:absolute;inset:0;transform:scale(1.08);transition:transform 2.8s var(--ease)}
 .hero.in .media{transform:scale(1)}
 .hero .copy{position:absolute;left:0;right:0;top:637px;text-align:center}
 .hero h1{font-weight:800;font-size:24px;line-height:28px;text-transform:uppercase}
@@ -61,7 +61,6 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 .card.big{width:710px;height:1171px}
 .card.big .ph{height:1065px}
 .card .ph img{transition:transform 1.4s var(--ease)}
-.card:hover .ph img{transform:scale(1.025)}
 .card .meta{padding:16px 12px 0}
 .name{font-size:13px;line-height:16px;color:var(--fg)}
 .price{font-size:14px;line-height:18px;color:var(--fg2);margin-top:4px}
@@ -90,7 +89,6 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 .lookbook .prods{width:710px;display:grid;grid-template-columns:353px 353px;column-gap:4px;row-gap:4px;align-content:start}
 .pcard .ph{height:530px;overflow:hidden;background:#f5f5f4}
 .pcard .ph img{transition:transform 1.4s var(--ease)}
-.pcard:hover .ph img{transform:scale(1.03)}
 .pcard .meta{padding:16px 12px 0;height:126px}
 .tag{font-size:12px;line-height:16px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--fg2)}
 .pcard .name{margin-top:4px}
@@ -137,7 +135,7 @@ footer .row{border-top:1px solid #e6e4e0}
 
 html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}.lenis.lenis-stopped{overflow:hidden}
 /* ---------- reveal (used sparingly) ---------- */
-.rv{opacity:0;transform:translateY(28px);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease)}
+.rv{opacity:0;transform:translateY(36px);transition:opacity 1.4s var(--ease),transform 1.4s var(--ease)}
 .rv.in{opacity:1;transform:none}
 
 @media (prefers-reduced-motion:reduce){
@@ -349,7 +347,7 @@ La noche, a medida.</p></header>
   document.querySelectorAll('.rv').forEach((el) => {
     // stagger siblings inside the same row
     const sibs = [...el.parentElement.children].filter(c => c.classList.contains('rv'));
-    el.style.transitionDelay = (sibs.indexOf(el) * 0.09) + 's';
+    el.style.transitionDelay = (sibs.indexOf(el) * 0.12) + 's';
     io.observe(el);
   });
 
@@ -400,7 +398,7 @@ La noche, a medida.</p></header>
   addEventListener('scroll', onScroll, { passive:true });
   // Lenis smooth scroll
   if (!reduce && window.Lenis){
-    const lenis = new Lenis({ duration:1.15, easing:t=>Math.min(1,1.001-Math.pow(2,-10*t)), smoothWheel:true });
+    const lenis = new Lenis({ duration:1.55, easing:t=>Math.min(1,1.001-Math.pow(2,-10*t)), smoothWheel:true });
     lenis.on('scroll', onScroll);
     const loop = t => { lenis.raf(t); requestAnimationFrame(loop); };
     requestAnimationFrame(loop);
