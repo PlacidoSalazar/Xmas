@@ -361,7 +361,7 @@ La noche, a medida.</p></header>
   const D = { bg:[15,14,13],   fg:[243,242,240], fg2:[168,164,158] };
   const mix = (a,b,t) => a.map((v,i) => Math.round(v + (b[i]-v)*t));
   const rgb = a => `rgb(${a.join(',')})`;
-  const ramp = 520; // px of scroll the fade takes
+  const ramp = 160; // px of scroll the fade takes (corto: que el gris casi no se vea)
   const smooth = t => t*t*(3-2*t);
   const feats = [...document.querySelectorAll('[data-parallax]')];
 
@@ -369,7 +369,7 @@ La noche, a medida.</p></header>
     const vh = innerHeight, mid = vh * 0.55;
     const r = dark.getBoundingClientRect();
     const tin  = Math.min(1, Math.max(0, (mid - r.top) / ramp + 0.5));
-    const tout = Math.min(1, Math.max(0, (r.bottom - (vh + 120)) / 400)); // vuelve a blanco antes de que entre 'Para regalar'
+    const tout = Math.min(1, Math.max(0, (r.bottom - (vh - 80)) / 160)); // vuelve a blanco cuando la última foto ya ha terminado (empieza en vh+80, acaba en vh-80)
     const t = smooth(Math.min(tin, tout));
     root.setProperty('--bg',  rgb(mix(L.bg,  D.bg,  t)));
     root.setProperty('--fg',  rgb(mix(L.fg,  D.fg,  t)));
