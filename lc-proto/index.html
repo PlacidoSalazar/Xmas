@@ -366,9 +366,9 @@ La noche, a medida.</p></header>
   const D = { bg:[15,14,13],   fg:[243,242,240], fg2:[168,164,158] };
   const mix = (a,b,t) => a.map((v,i) => Math.round(v + (b[i]-v)*t));
   const rgb = a => `rgb(${a.join(',')})`;
-  const ramp = 540; // px de scroll que dura el fundido blanco → negro (más largo = más suave)
+  const ramp = 720; // px de scroll que dura el fundido blanco → negro (más largo = más suave)
   const smooth = t => t*t*(3-2*t);
-  const smoother = t => t < .5 ? 16*t*t*t*t*t : 1 - Math.pow(-2*t + 2, 5) / 2; // easeInOutQuint: arranque y llegada muy suaves
+  const smoother = t => (1 - Math.cos(Math.PI * t)) / 2; // easeInOutSine: la más suave, pendiente máx. 1,57× (la quint llegaba a 5×)
   const feats = [...document.querySelectorAll('[data-parallax]')];
 
   function frame(){
