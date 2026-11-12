@@ -201,7 +201,7 @@ Cómodo, y se nota.</p></header>
     </div>
   </section>
 
-  <div class="sec feature" data-parallax><img src="img/feat-1.jpg" alt=""></div>
+  <div class="sec feature rv" data-parallax><img src="img/feat-1.jpg" alt=""></div>
 
   <!-- INSTINTO -->
   <section class="sec">
@@ -214,7 +214,7 @@ Lo salvaje, bien llevado.</p></header>
     </div>
   </section>
 
-  <div class="sec feature" data-parallax><img src="img/feat-2.jpg" alt=""></div>
+  <div class="sec feature rv" data-parallax><img src="img/feat-2.jpg" alt=""></div>
 
   <!-- SATÉN -->
   <section class="sec">
@@ -230,7 +230,7 @@ Una luz suave, en voz baja.</p></header>
     </div>
   </section>
 
-  <div class="sec feature" data-parallax><img src="img/feat-3.jpg" alt=""></div>
+  <div class="sec feature rv" data-parallax><img src="img/feat-3.jpg" alt=""></div>
 
   <!-- ============ DARK BAND ============ -->
   <div class="sec band-dark" id="dark">
@@ -258,7 +258,7 @@ Luz que se queda en la ropa.</p></header>
       </div>
     </section>
 
-    <div class="sec feature" data-parallax><img src="img/feat-4.jpg" alt=""></div>
+    <div class="sec feature rv" data-parallax><img src="img/feat-4.jpg" alt=""></div>
 
     <!-- TOTAL BLACK -->
     <section class="sec">
@@ -282,7 +282,7 @@ La noche, a medida.</p></header>
       </div>
     </section>
 
-    <div class="sec feature" data-parallax><img src="img/feat-5.jpg" alt=""></div>
+    <div class="sec feature rv" data-parallax><img src="img/feat-5.jpg" alt=""></div>
   </div>
   <!-- ============ /DARK BAND ============ -->
 
@@ -353,6 +353,7 @@ La noche, a medida.</p></header>
   }), { rootMargin: '0px 0px -12% 0px' });
   document.querySelectorAll('.rv').forEach((el) => {
     // stagger siblings inside the same row
+    if (el.classList.contains('feature')) return; // full width: entra sola, sin retardo
     const sibs = [...el.parentElement.children].filter(c => c.classList.contains('rv'));
     el.style.transitionDelay = (sibs.indexOf(el) * 0.2) + 's';
   });
