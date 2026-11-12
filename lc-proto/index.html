@@ -12,7 +12,12 @@
   --bg:#fefdfb; --fg:#181716; --fg2:#6e6c69;
   --light-bg:#fefdfb; --light-fg:#181716; --light-fg2:#6e6c69;
   --gap:140px;
-  --ease:cubic-bezier(.16,.84,.3,1);
+  --ease:cubic-bezier(.16,.84,.3,1); /* UI: header, hover */
+  --soft:cubic-bezier(.22,.61,.36,1); /* atmósfera: hero, reveals, fundidos de imagen */
+  /* MOTION · escala de Do mayor, entonación justa. Tónica = 0.4s.
+     tiempo = 0.4s × razón × 2^octava; razones 1, 9/8, 5/4, 4/3, 3/2, 5/3, 15/8
+     .2 · .4 · .45 · .6 · .667 · 1 · 1.2 · 1.333 · 1.6 · 2.667
+     distancias: base 120px → 80 (2/3) · 160 (4/3) · 540 (9/8 × 480); zoom 1.06 = un semitono (2^(1/12)) */
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{background:#e4e3e1}
@@ -36,13 +41,13 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 
 /* ---------- hero ---------- */
 .hero{height:810px;margin-top:-96px;position:relative;overflow:hidden;color:#fefdfb}
-.hero .media{position:absolute;inset:0;transform:scale(1.08);transition:transform 2.8s var(--ease)}
+.hero .media{position:absolute;inset:0;transform:scale(1.06);transition:transform 2.667s var(--soft)}
 .hero.in .media{transform:scale(1)}
 .hero .copy{position:absolute;left:0;right:0;top:637px;text-align:center}
 .hero h1{font-weight:800;font-size:24px;line-height:28px;text-transform:uppercase}
 .hero p{font-size:14px;line-height:19px;margin-top:8px}
-.hero .copy>*{opacity:0;transform:translateY(14px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
-.hero.in .copy h1{opacity:1;transform:none;transition-delay:.35s}
+.hero .copy>*{opacity:0;transform:translateY(14px);transition:opacity 1s var(--soft),transform 1s var(--soft)}
+.hero.in .copy h1{opacity:1;transform:none;transition-delay:.4s}
 .hero.in .copy p{opacity:1;transform:none;transition-delay:.6s}
 
 /* ---------- sections ---------- */
@@ -60,7 +65,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 .card .ph{height:708px;overflow:hidden;background:#f5f5f4}
 .card.big{width:710px;height:1171px}
 .card.big .ph{height:1065px}
-.card .ph img{transition:transform 1.4s var(--ease)}
+.card .ph img{transition:transform 1.333s var(--ease)}
 .card .meta{padding:16px 12px 0}
 .name{font-size:13px;line-height:16px;color:var(--fg)}
 .price{font-size:14px;line-height:18px;color:var(--fg2);margin-top:4px}
@@ -70,9 +75,9 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 /* feature image */
 /* preloader: shimmer gris mientras carga imagen/vídeo */
 .ph,.feature,.hero .media{position:relative}
-.ph:not(.ready)::before,.feature:not(.ready)::before,.hero .media:not(.ready)::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(100deg,#eceae7 30%,#f7f6f4 50%,#eceae7 70%) 0 0/250% 100%;animation:shim 1.3s linear infinite}
-.ph.ready::before,.feature.ready::before,.hero .media.ready::before{opacity:0;transition:opacity .6s}
-.ph img,.ph video,.feature img,.hero .media img{opacity:0;transition:opacity .7s var(--ease)}
+.ph:not(.ready)::before,.feature:not(.ready)::before,.hero .media:not(.ready)::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(100deg,#eceae7 30%,#f7f6f4 50%,#eceae7 70%) 0 0/250% 100%;animation:shim 1.2s linear infinite}
+.ph.ready::before,.feature.ready::before,.hero .media.ready::before{opacity:0;transition:opacity .6s var(--soft)}
+.ph img,.ph video,.feature img,.hero .media img{opacity:0;transition:opacity .667s var(--soft)}
 .ph.ready img,.ph.ready video,.feature.ready img,.hero .media.ready img{opacity:1}
 @keyframes shim{from{background-position:100% 0}to{background-position:-100% 0}}
 @media (prefers-reduced-motion:reduce){.ph:not(.ready)::before,.feature:not(.ready)::before,.hero .media:not(.ready)::before{animation:none}}
@@ -88,7 +93,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 .lookbook .look-img .price{margin-top:8px;line-height:17px}
 .lookbook .prods{width:710px;display:grid;grid-template-columns:353px 353px;column-gap:4px;row-gap:4px;align-content:start}
 .pcard .ph{height:530px;overflow:hidden;background:#f5f5f4}
-.pcard .ph img{transition:transform 1.4s var(--ease)}
+.pcard .ph img{transition:transform 1.333s var(--ease)}
 .pcard .meta{padding:16px 12px 0;height:126px}
 .tag{font-size:12px;line-height:16px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--fg2)}
 .pcard .name{margin-top:4px}
@@ -135,7 +140,7 @@ footer .row{border-top:1px solid #e6e4e0}
 
 html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}.lenis.lenis-stopped{overflow:hidden}
 /* ---------- reveal (used sparingly) ---------- */
-.rv{--soft:cubic-bezier(.22,.61,.36,1);opacity:0;filter:blur(2px);transition:opacity 1.6s var(--soft),filter 1.6s var(--soft)}
+.rv{opacity:0;filter:blur(2px);transition:opacity 1.6s var(--soft),filter 1.6s var(--soft)}
 .rv.in{opacity:1;filter:none}
 
 @media (prefers-reduced-motion:reduce){
@@ -347,11 +352,11 @@ La noche, a medida.</p></header>
   document.querySelectorAll('.rv').forEach((el) => {
     // stagger siblings inside the same row
     const sibs = [...el.parentElement.children].filter(c => c.classList.contains('rv'));
-    el.style.transitionDelay = (sibs.indexOf(el) * 0.18) + 's';
+    el.style.transitionDelay = (sibs.indexOf(el) * 0.2) + 's';
   });
   // orden: primero el texto del hero, después los módulos (stagger)
   const startReveal = () => document.querySelectorAll('.rv').forEach(el => io.observe(el));
-  setTimeout(startReveal, reduce ? 0 : 1700);
+  setTimeout(startReveal, reduce ? 0 : 1600);
 
   // White → dark → white, driven by scroll
   const dark = document.getElementById('dark');
@@ -361,9 +366,9 @@ La noche, a medida.</p></header>
   const D = { bg:[15,14,13],   fg:[243,242,240], fg2:[168,164,158] };
   const mix = (a,b,t) => a.map((v,i) => Math.round(v + (b[i]-v)*t));
   const rgb = a => `rgb(${a.join(',')})`;
-  const ramp = 420; // px de scroll que dura el fundido blanco → negro (más largo = más suave)
+  const ramp = 540; // px de scroll que dura el fundido blanco → negro (más largo = más suave)
   const smooth = t => t*t*(3-2*t);
-  const smoother = t => t*t*t*(t*(t*6-15)+10); // arranque y llegada más suaves que smooth
+  const smoother = t => t < .5 ? 16*t*t*t*t*t : 1 - Math.pow(-2*t + 2, 5) / 2; // easeInOutQuint: arranque y llegada muy suaves
   const feats = [...document.querySelectorAll('[data-parallax]')];
 
   function frame(){
@@ -401,7 +406,7 @@ La noche, a medida.</p></header>
   addEventListener('scroll', onScroll, { passive:true });
   // Lenis smooth scroll
   if (!reduce && window.Lenis){
-    const lenis = new Lenis({ duration:1.55, easing:t=>Math.min(1,1.001-Math.pow(2,-10*t)), smoothWheel:true });
+    const lenis = new Lenis({ duration:1.6, easing:t=>Math.min(1,1.001-Math.pow(2,-10*t)), smoothWheel:true });
     lenis.on('scroll', onScroll);
     const loop = t => { lenis.raf(t); requestAnimationFrame(loop); };
     requestAnimationFrame(loop);
