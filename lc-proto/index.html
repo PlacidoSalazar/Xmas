@@ -372,7 +372,7 @@ La noche, a medida.</p></header>
   const mix = (a,b,t) => a.map((v,i) => Math.round(v + (b[i]-v)*t));
   const rgb = a => `rgb(${a.join(',')})`;
   const smoother = t => (1 - Math.cos(Math.PI * t)) / 2; // easeInOutSine
-  const FADE = 1.6; // s · escala musical (tónica ×4). Se escala si se invierte a mitad de camino
+  const FADE = 1.2; // s · escala musical (3/2 × 0.4 × 2). Se escala si se invierte a mitad de camino
   const IN_AT = 160, OUT_AT = 80; // px · disparadores (4/3 y 2/3 de la base 120)
   let cur = 0, from = 0, to = 0, t0 = 0, anim = false, first = true;
   function paint(t){
