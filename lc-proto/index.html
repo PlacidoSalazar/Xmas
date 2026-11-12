@@ -135,7 +135,7 @@ footer .row{border-top:1px solid #e6e4e0}
 
 html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}.lenis.lenis-stopped{overflow:hidden}
 /* ---------- reveal (used sparingly) ---------- */
-.rv{--soft:cubic-bezier(.22,.61,.36,1);opacity:0;transform:translateY(24px);filter:blur(4px);transition:opacity 2s var(--soft),transform 2.2s var(--soft),filter 1.8s var(--soft)}
+.rv{--soft:cubic-bezier(.22,.61,.36,1);opacity:0;transform:translateY(24px);filter:blur(4px);transition:opacity 1.6s var(--soft),transform 1.6s var(--soft),filter 1.6s var(--soft)}
 .rv.in{opacity:1;transform:none;filter:none}
 
 @media (prefers-reduced-motion:reduce){
@@ -347,7 +347,7 @@ La noche, a medida.</p></header>
   document.querySelectorAll('.rv').forEach((el) => {
     // stagger siblings inside the same row
     const sibs = [...el.parentElement.children].filter(c => c.classList.contains('rv'));
-    el.style.transitionDelay = (sibs.indexOf(el) * 0.22) + 's';
+    el.style.transitionDelay = (sibs.indexOf(el) * 0.18) + 's';
   });
   // orden: primero el texto del hero, después los módulos (stagger)
   const startReveal = () => document.querySelectorAll('.rv').forEach(el => io.observe(el));
