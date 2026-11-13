@@ -9,11 +9,25 @@
 <style>
 
 :root{
-  --bg:#fefdfb; --fg:#181716; --fg2:#6e6c69;
+  /* color tokens = LC · Color semantic (Figma): modo Light | Dark */
+  --bg:#fefdfb; --fg:#181716; --fg2:#6e6c69;                    /* surface/page · text/primary · text/secondary (Light) */
   --light-bg:#fefdfb; --light-fg:#181716; --light-fg2:#6e6c69;
   /* superficie oscura única: fondo del bloque oscuro, topbar y botones oscuros */
   --tempo:.9; /* multiplicador global de tiempo: .9 = 10% más rápido; la escala musical se conserva */
-  --surface-dark:#111111; --on-dark:#f3f2f0; --on-dark-2:#a8a49e;
+  --surface-dark:#0f0e0d; --on-dark:#f3f2f0; --on-dark-2:#a8a49e; /* surface/page · text/primary · text/secondary (Dark) */
+  --surface-product:#f7f7f9;  /* surface/product */
+  --border-default:#e1dfdb;   /* border/default (Light) */
+  --swatch-champagne:#e5c3a8; /* campaign/champagne */
+  /* type tokens = LC · Typography (Figma): Desktop | Mobile */
+  --font-title:Manrope,system-ui,sans-serif;  /* font/title */
+  --font-body:Manrope,system-ui,sans-serif;   /* font/body */
+  --font-weight-regular:400;                   /* font-weight/regular */
+  --font-weight-extrabold:800;                 /* font-weight/extrabold */
+  --letter-spacing-none:0;                     /* letter-spacing/none */
+  --font-size-chapter-label:20px;              /* Chapter/Label        20 | 20 */
+  --line-height-chapter-label:28px;            /*                      28 | 28 */
+  --font-size-chapter-description:14px;        /* Chapter/Description  14 | 14 */
+  --line-height-chapter-description:18px;      /*                      18 | 18 */
   /* spacing tokens = LC · Spatial (Figma): Desktop | Mobile */
   --gap:140px;          /* layout/chapter-space  140 | 80 */
   --block-gap:80px;     /* layout/block-gap       80 | 40 */
@@ -63,15 +77,15 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 /* ---------- sections ---------- */
 .sec{margin-top:var(--gap)}
 .chapter{width:100%;max-width:710px;padding:0 var(--text-inset);margin:0 auto;text-align:center}
-.chapter h2{font-weight:800;font-size:24px;line-height:28px;text-transform:uppercase;color:var(--fg)}
-.chapter p{font-size:14px;line-height:18px;color:var(--fg2);margin-top:8px;white-space:pre-line}
+.chapter h2{font-family:var(--font-title);font-weight:var(--font-weight-extrabold);font-size:var(--font-size-chapter-label);line-height:var(--line-height-chapter-label);letter-spacing:var(--letter-spacing-none);text-transform:uppercase;color:var(--fg)}
+.chapter p{font-family:var(--font-body);font-weight:var(--font-weight-regular);font-size:var(--font-size-chapter-description);line-height:var(--line-height-chapter-description);color:var(--fg2);margin-top:8px;white-space:pre-line}
 .chapter + .grid,.chapter + .lookbook{margin-top:var(--block-gap)}
 
 .grid{display:flex;justify-content:center;align-items:flex-start;gap:var(--gutter)}
 .grid + .grid{margin-top:var(--block-gap)}
 
 .card{flex:0 0 32.96%;min-width:0}  /* 472 / 1432 */
-.card .ph{aspect-ratio:472/708;overflow:hidden;background:#f5f5f4}
+.card .ph{aspect-ratio:472/708;overflow:hidden;background:var(--surface-product)}
 .card.big{flex:0 0 49.58%}           /* 710 / 1432 */
 .card.big .ph{aspect-ratio:710/1065}
 .card .ph img{transition:transform calc(1.333s * var(--tempo)) var(--ease)}
@@ -103,7 +117,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 .lookbook .look-img .name{font-size:14px;line-height:17px}
 .lookbook .look-img .price{margin-top:8px;line-height:17px}
 .lookbook .prods{flex:1 1 0;min-width:0;display:grid;grid-template-columns:1fr 1fr;gap:var(--gutter);align-content:start}
-.pcard .ph{aspect-ratio:353/530;overflow:hidden;background:#f5f5f4}
+.pcard .ph{aspect-ratio:353/530;overflow:hidden;background:var(--surface-product)}
 .pcard .ph img{transition:transform calc(1.333s * var(--tempo)) var(--ease)}
 .pcard .meta{padding:16px var(--text-inset) 0;height:126px}
 .tag{font-size:12px;line-height:16px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--fg2)}
@@ -111,14 +125,14 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 .pcard .price{margin-top:4px}
 .sw{display:flex;gap:6px;margin-top:14px}
 .sw i{width:20px;height:20px;border-radius:50%;display:grid;place-items:center}
-.sw i::after{content:"";width:12px;height:12px;border-radius:50%;background:#e2c3a5}
+.sw i::after{content:"";width:12px;height:12px;border-radius:50%;background:var(--swatch-champagne)}
 .sw i.on{box-shadow:inset 0 0 0 .5px var(--fg)}
 .sw.plp{margin-top:8px}
 .sw.plp i::after{background:#862605}
 
 /* gifts */
 .gifts-head{display:flex;justify-content:space-between;align-items:baseline;padding:0 16px}
-.gifts-head h2{font-weight:800;font-size:24px;line-height:28px;text-transform:uppercase}
+.gifts-head h2{font-family:var(--font-title);font-weight:var(--font-weight-extrabold);font-size:var(--font-size-chapter-label);line-height:var(--line-height-chapter-label);text-transform:uppercase}
 .gifts-head a{font-size:14px;line-height:18px;text-decoration:underline;text-underline-offset:3px}
 .gifts{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--gutter);padding:0 var(--inset);margin-top:24px}
 .gifts .pcard .meta{height:98px}
@@ -130,7 +144,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 
 /* ---------- footer ---------- */
 footer{margin-top:var(--gap);color:var(--light-fg);background:var(--light-bg)}
-footer .row{border-top:1px solid #e6e4e0}
+footer .row{border-top:1px solid var(--border-default)}
 .usp{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;padding:80px 40px;text-align:center}
 .usp b{display:block;font-weight:600;font-size:20px;line-height:24px}
 .usp span{display:block;font-size:16px;line-height:20px;color:var(--light-fg2);margin-top:8px}
@@ -162,6 +176,7 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
   .header{height:48px;margin-bottom:-48px;padding:0 12px}
   .hero{height:640px;margin-top:0}
   .hero .copy{top:auto;bottom:80px;padding:0 24px}
+  .hero h1{font-size:20px;line-height:28px}  /* Figma mobile: hero title 20/28 */
   .grid{padding:0 var(--inset)}
   .card{flex:1 1 0}
   .card .meta,.card.look .meta,.pcard .meta,.gifts .pcard .meta{height:auto;padding-bottom:24px}  /* Figma: padding 0/12/24/12 */
