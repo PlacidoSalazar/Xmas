@@ -38,7 +38,7 @@
   --soft:cubic-bezier(.22,.61,.36,1); /* atmósfera: hero, reveals, fundidos de imagen */
   /* MOTION · escala de Do mayor, entonación justa. Tónica = 0.4s.
      tiempo = 0.4s × razón × 2^octava; razones 1, 9/8, 5/4, 4/3, 3/2, 5/3, 15/8
-     .2 · .4 · .45 · .6 · .667 · 1 · 1.2 · 1.333 · 1.6 · 2.667
+     .2 · .4 · .45 · .6 · .667 · .8 · .9 · 1 · 1.2 · 1.333 · 1.6 · 2.667
      distancias: base 120px → 80 (2/3) · 160 (4/3) · 540 (9/8 × 480); zoom 1.06 = un semitono (2^(1/12)) */
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -100,10 +100,10 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 /* preloader: shimmer gris mientras carga imagen/vídeo */
 .ph,.feature,.hero .media{position:relative}
 .ph:not(.ready)::before,.feature:not(.ready)::before,.hero .media:not(.ready)::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(100deg,#eceae7 30%,#f7f6f4 50%,#eceae7 70%) 0 0/250% 100%;animation:shim calc(1.2s * var(--tempo)) linear infinite}
-.ph.ready::before,.feature.ready::before,.hero .media.ready::before{opacity:0;transition:opacity calc(.6s * var(--tempo)) var(--soft)}
+.ph.ready::before,.feature.ready::before,.hero .media.ready::before{opacity:0;transition:opacity calc(.8s * var(--tempo)) var(--soft)}
 .ph picture,.feature picture{display:contents}
 .ph img,.ph video,.feature img{position:absolute;inset:0}
-.ph img,.ph video,.feature img,.hero .media img{opacity:0;transition:opacity calc(.667s * var(--tempo)) var(--soft)}
+.ph img,.ph video,.feature img,.hero .media img{opacity:0;transition:opacity calc(.9s * var(--tempo)) var(--soft)}
 .ph.ready img,.ph.ready video,.feature.ready img,.hero .media.ready img{opacity:1}
 @keyframes shim{from{background-position:100% 0}to{background-position:-100% 0}}
 @media (prefers-reduced-motion:reduce){.ph:not(.ready)::before,.feature:not(.ready)::before,.hero .media:not(.ready)::before{animation:none}}
