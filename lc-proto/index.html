@@ -87,7 +87,8 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 .ph,.feature,.hero .media{position:relative}
 .ph:not(.ready)::before,.feature:not(.ready)::before,.hero .media:not(.ready)::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(100deg,#eceae7 30%,#f7f6f4 50%,#eceae7 70%) 0 0/250% 100%;animation:shim calc(1.2s * var(--tempo)) linear infinite}
 .ph.ready::before,.feature.ready::before,.hero .media.ready::before{opacity:0;transition:opacity calc(.6s * var(--tempo)) var(--soft)}
-.ph>img,.ph>video,.feature>img{position:absolute;inset:0}
+.ph picture,.feature picture{display:contents}
+.ph img,.ph video,.feature img{position:absolute;inset:0}
 .ph img,.ph video,.feature img,.hero .media img{opacity:0;transition:opacity calc(.667s * var(--tempo)) var(--soft)}
 .ph.ready img,.ph.ready video,.feature.ready img,.hero .media.ready img{opacity:1}
 @keyframes shim{from{background-position:100% 0}to{background-position:-100% 0}}
@@ -169,7 +170,7 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
   .feature{aspect-ratio:2/3}
   .lookbook{flex-direction:column}
   .lookbook .look-img .ph{flex:none;aspect-ratio:2/3}
-  .lookbook .look-img .meta{height:auto;padding-bottom:0}
+  .lookbook .look-img .meta{height:auto;padding-bottom:24px}  /* Figma: 16 + texto 38 + 24 */
   .lookbook .prods{flex:none}
   .gifts-head{padding:0 12px}
   .gifts{grid-template-columns:1fr 1fr;margin-top:48px}
@@ -241,7 +242,7 @@ Cómodo, y se nota.</p></header>
     </div>
   </section>
 
-  <div class="sec feature rv" data-parallax><img src="img/feat-1.jpg" alt=""></div>
+  <div class="sec feature rv" data-parallax><picture><source media="(max-width:768px)" srcset="img/feat-1-m.jpg"><img src="img/feat-1.jpg" alt=""></picture></div>
 
   <!-- INSTINTO -->
   <section class="sec">
@@ -254,7 +255,7 @@ Lo salvaje, bien llevado.</p></header>
     </div>
   </section>
 
-  <div class="sec feature rv" data-parallax><img src="img/feat-2.jpg" alt=""></div>
+  <div class="sec feature rv" data-parallax><picture><source media="(max-width:768px)" srcset="img/feat-2-m.jpg"><img src="img/feat-2.jpg" alt=""></picture></div>
 
   <!-- SATÉN -->
   <section class="sec">
@@ -267,7 +268,7 @@ Una luz suave, en voz baja.</p></header>
     </div>
   </section>
 
-  <div class="sec feature rv" data-parallax><img src="img/feat-3.jpg" alt=""></div>
+  <div class="sec feature rv" data-parallax><picture><source media="(max-width:768px)" srcset="img/feat-3-m.jpg"><img src="img/feat-3.jpg" alt=""></picture></div>
 
   <!-- ============ DARK BAND ============ -->
   <div class="sec band-dark" id="dark">
@@ -282,7 +283,7 @@ Luz que se queda en la ropa.</p></header>
         <a class="card rv" href="#"><div class="ph"><img src="img/brillo-2.jpg" alt=""></div><div class="meta"><div class="name">Top de encaje</div><div class="price">120,00 €</div><div class="sw plp"><i class="on"></i></div></div></a>
       </div>
       <div class="lookbook" style="margin-top:var(--block-gap)">
-        <a class="look-img rv" href="#"><div class="ph"><img src="img/brillo-look.jpg" alt=""></div><div class="meta"><div class="name">Compra el look</div><div class="price">N productos</div></div></a>
+        <a class="look-img rv" href="#"><div class="ph"><picture><source media="(max-width:768px)" srcset="img/brillo-look-m.jpg"><img src="img/brillo-look.jpg" alt=""></picture></div><div class="meta"><div class="name">Compra el look</div><div class="price">N productos</div></div></a>
         <div class="prods">
           <a class="pcard rv" href="#"><div class="ph"><img src="img/brillo-p1.jpg" alt=""></div><div class="meta"><div class="tag">Nuevo</div><div class="name">Bolso</div><div class="price">180,00 €</div><div class="sw"><i class="on"></i></div></div></a>
           <a class="pcard rv" href="#"><div class="ph"><img src="img/brillo-p2.jpg" alt=""></div><div class="meta"><div class="tag">Nuevo</div><div class="name">Jersey de lentejuelas</div><div class="price">180,00 €</div><div class="sw"><i class="on"></i></div></div></a>
@@ -292,7 +293,7 @@ Luz que se queda en la ropa.</p></header>
       </div>
     </section>
 
-    <div class="sec feature rv" data-parallax><img src="img/feat-4.jpg" alt=""></div>
+    <div class="sec feature rv" data-parallax><picture><source media="(max-width:768px)" srcset="img/feat-4-m.jpg"><img src="img/feat-4.jpg" alt=""></picture></div>
 
     <!-- TOTAL BLACK -->
     <section class="sec">
@@ -300,7 +301,7 @@ Luz que se queda en la ropa.</p></header>
 Cada pieza en su sitio.
 La noche, a medida.</p></header>
       <div class="lookbook">
-        <a class="look-img rv" href="#"><div class="ph"><img src="img/tb-look.jpg" alt=""></div><div class="meta"><div class="name">Compra el look</div><div class="price">N productos</div></div></a>
+        <a class="look-img rv" href="#"><div class="ph"><picture><source media="(max-width:768px)" srcset="img/tb-look-m.jpg"><img src="img/tb-look.jpg" alt=""></picture></div><div class="meta"><div class="name">Compra el look</div><div class="price">N productos</div></div></a>
         <div class="prods">
           <a class="pcard rv" href="#"><div class="ph"><img src="img/brillo-p1.jpg" alt=""></div><div class="meta"><div class="tag">Nuevo</div><div class="name">Bolso</div><div class="price">180,00 €</div><div class="sw"><i class="on"></i></div></div></a>
           <a class="pcard rv" href="#"><div class="ph"><img src="img/tb-p2.jpg" alt=""></div><div class="meta"><div class="tag">Nuevo</div><div class="name">Pantalón</div><div class="price">180,00 €</div><div class="sw"><i class="on"></i></div></div></a>
@@ -310,7 +311,7 @@ La noche, a medida.</p></header>
       </div>
     </section>
 
-    <div class="sec feature rv" data-parallax><img src="img/feat-5.jpg" alt=""></div>
+    <div class="sec feature rv" data-parallax><picture><source media="(max-width:768px)" srcset="img/feat-5-m.jpg"><img src="img/feat-5.jpg" alt=""></picture></div>
   </div>
   <!-- ============ /DARK BAND ============ -->
 
