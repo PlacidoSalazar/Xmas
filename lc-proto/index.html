@@ -104,6 +104,9 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 .ph img,.ph video,.feature img{position:absolute;inset:0}
 .ph img,.ph video,.feature img,.hero .media img{opacity:0;transition:opacity calc(.9s * var(--tempo)) var(--soft)}
 .ph.ready img,.ph.ready video,.feature.ready img,.hero .media.ready img{opacity:1}
+/* hero: entrada más lenta que el resto de fotos (1.6 = tónica, 2 octavas) */
+.hero .media img{transition-duration:calc(1.6s * var(--tempo))}
+.hero .media.ready::before{transition-duration:calc(1.6s * var(--tempo))}
 @keyframes shim{from{background-position:100% 0}to{background-position:-100% 0}}
 @media (prefers-reduced-motion:reduce){.ph:not(.ready)::before,.feature:not(.ready)::before,.hero .media:not(.ready)::before{animation:none}}
 .feature{width:calc(100% - 2 * var(--inset));aspect-ratio:1424/1068;margin-left:var(--inset);margin-right:var(--inset);overflow:hidden}
