@@ -29,8 +29,9 @@
   --font-size-chapter-description:14px;        /* Chapter/Description  14 | 14 */
   --line-height-chapter-description:18px;      /*                      18 | 18 */
   /* spacing tokens = LC · Spacing (Figma): Desktop | Mobile */
-  --gap:140px;          /* space/chapter  140 | 64 */
-  --block-gap:80px;     /* space/block     80 | 36 */
+  --page-max:none;      /* full width: sin tope. Para limitar, p. ej. 1920px (se centra a partir de ahí) */
+  --gap:clamp(140px,9.78vw,188px);       /* space/chapter  140 | 64 · crece solo por encima de 1432 */
+  --block-gap:clamp(80px,5.59vw,107px);  /* space/block     80 | 36 · crece solo por encima de 1432 */
   --heading-gap:8px;    /* space/heading    8 |  8 */
   --inset:4px;          /* grid/margin             4 | 4  */
   --gutter:4px;         /* grid/gutter             4 | 4  */
@@ -51,7 +52,7 @@ img,video{display:block;width:100%;height:100%;object-fit:cover}
 a{color:inherit;text-decoration:none}
 a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid currentColor;outline-offset:3px}
 
-.page{width:100%;max-width:1432px;margin:0 auto;background:var(--bg);position:relative;overflow:clip}
+.page{width:100%;max-width:var(--page-max);margin:0 auto;background:var(--bg);position:relative;overflow:clip}
 
 /* ---------- header ---------- */
 .topbar{height:32px;background:var(--surface-dark);position:relative;z-index:30}
@@ -66,10 +67,10 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 .header svg{display:block}
 
 /* ---------- hero ---------- */
-.hero{height:810px;margin-top:-96px;position:relative;overflow:hidden;color:#fefdfb}
+.hero{width:100%;aspect-ratio:1432/810;max-height:100svh;margin-top:-96px;position:relative;overflow:hidden;color:#fefdfb}
 .hero .media picture{display:block;width:100%;height:100%}
 .hero .media{position:absolute;inset:0}
-.hero .copy{position:absolute;left:0;right:0;top:637px;text-align:center}
+.hero .copy{position:absolute;left:0;right:0;top:78.6%;text-align:center}
 .hero h1{font-weight:800;font-size:24px;line-height:28px;text-transform:uppercase}
 .hero p{font-size:14px;line-height:19px;margin-top:8px}
 .hero .copy>*{opacity:0;transform:translateY(14px);transition:opacity calc(1s * var(--tempo)) var(--soft),transform calc(1s * var(--tempo)) var(--soft)}
@@ -179,7 +180,7 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
   .topbar img{display:none}
   .topbar .txt{display:flex}
   .header{height:48px;margin-bottom:-48px;padding:0 12px}
-  .hero{height:640px;margin-top:0}
+  .hero{height:640px;aspect-ratio:auto;max-height:none;margin-top:0}
   .hero .copy{top:auto;bottom:80px;padding:0 24px}
   .hero h1{font-size:20px;line-height:28px}  /* Figma mobile: hero title 20/28 */
   .grid{padding:0 var(--inset)}
