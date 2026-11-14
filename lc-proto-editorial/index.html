@@ -54,8 +54,10 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 
 /* ---------- header ---------- */
 .topbar{height:32px;background:var(--surface-dark);position:relative;z-index:30}
-.topbar img{height:32px;width:100%;object-fit:cover}
-.topbar .txt{display:none;height:32px;align-items:center;justify-content:center;color:var(--on-dark);font-size:12px;line-height:16px;padding:0 12px;text-align:center}
+.topbar img{display:none}
+.topbar .txt{display:flex;height:32px;align-items:center;justify-content:center;color:var(--on-dark);font-size:14px;line-height:18px;padding:0 64px;text-align:center}
+.topbar .tb-nav,.topbar .tb-close{position:absolute;top:0;height:32px;display:flex;align-items:center;gap:16px;color:var(--on-dark)}
+.topbar .tb-nav{left:24px}.topbar .tb-close{right:24px}
 .header{position:sticky;top:0;height:64px;margin-bottom:-64px;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:0 40px;color:#fefdfb;transition:color calc(.4s * var(--tempo)) var(--ease),background-color calc(.4s * var(--tempo)) var(--ease),transform calc(.45s * var(--tempo)) var(--ease)}
 .header.solid{color:#181716;background:#fefdfb}
 .header.hide{transform:translateY(-100%)}
@@ -177,7 +179,8 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
   :root{--gap:64px;--block-gap:36px}
   .hero{aspect-ratio:auto}
   .topbar img{display:none}
-  .topbar .txt{display:flex}
+  .topbar .txt{display:flex;font-size:12px;line-height:16px;padding:0 12px}
+  .topbar .tb-nav,.topbar .tb-close{display:none}
   .header{height:48px;margin-bottom:-48px;padding:0 12px}
   .hero{height:640px;margin-top:0}
   .hero .copy{top:auto;bottom:80px;padding:0 24px}
@@ -215,7 +218,7 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
 <body>
 <div class="page" id="page">
 
-  <div class="topbar"><img src="img/topbar.png" alt="Hasta un 40% OFF para miembros Lola&amp;You"><div class="txt">Hasta un 40% OFF para miembros Lola&amp;You</div></div>
+  <div class="topbar"><span class="tb-nav" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg><svg viewBox="0 0 16 16" width="16" height="16"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span><div class="txt">Hasta un 40% OFF para miembros Lola&amp;You</div><span class="tb-close" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M3 3l10 10M13 3 3 13" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span></div>
   <header class="header" id="hdr">
     <button class="ic menu" aria-label="Menú"><svg viewBox="0 0 16 12" width="16" height="12" aria-hidden="true"><path d="M0 1h16M0 6h16M0 11h16" stroke="currentColor" stroke-width="1.4"/></svg></button>
     <a class="logo-animal" href="#" aria-label="Inicio"><svg viewBox="0 0 44.675 24" width="45" height="24" aria-hidden="true">
