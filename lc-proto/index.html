@@ -103,7 +103,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 
 /* feature image */
 /* preloader: shimmer gris mientras carga imagen/vídeo */
-.ph,.feature,.hero .media{position:relative}
+.ph,.feature{position:relative}
 .ph:not(.ready)::before,.feature:not(.ready)::before,.hero .media:not(.ready)::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(100deg,#eceae7 30%,#f7f6f4 50%,#eceae7 70%) 0 0/250% 100%;animation:shim calc(1.2s * var(--tempo)) linear infinite}
 .ph.ready::before,.feature.ready::before,.hero .media.ready::before{opacity:0;transition:opacity calc(.8s * var(--tempo)) var(--soft)}
 .ph picture,.feature picture{display:contents}
