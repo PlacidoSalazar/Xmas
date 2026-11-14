@@ -29,7 +29,7 @@
   --font-size-chapter-description:14px;        /* Chapter/Description  14 | 14 */
   --line-height-chapter-description:18px;      /*                      18 | 18 */
   /* spacing tokens = LC · Spacing (Figma): Desktop | Mobile */
-  --page-max:1920px;    /* tope del layout fluido (desktop); a partir de aquí se centra */
+  --page-max:none;      /* full width: sin tope. Para limitar, p. ej. 1920px (se centra a partir de ahí) */
   --gap:clamp(140px,9.78vw,188px);       /* space/chapter  140 | 64 · crece solo por encima de 1432 */
   --block-gap:clamp(80px,5.59vw,107px);  /* space/block     80 | 36 · crece solo por encima de 1432 */
   --heading-gap:8px;    /* space/heading    8 |  8 */
@@ -65,7 +65,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 .header svg{display:block}
 
 /* ---------- hero ---------- */
-.hero{aspect-ratio:1432/810;margin-top:-96px;position:relative;overflow:hidden;color:#fefdfb}
+.hero{width:100%;aspect-ratio:1432/810;max-height:100svh;margin-top:-96px;position:relative;overflow:hidden;color:#fefdfb}
 .hero .media picture{display:block;width:100%;height:100%}
 .hero .media{position:absolute;inset:0}
 .hero .copy{position:absolute;left:0;right:0;top:78.6%;text-align:center}
