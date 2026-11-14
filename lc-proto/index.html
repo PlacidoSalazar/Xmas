@@ -36,6 +36,8 @@
   --gutter:4px;         /* grid/gutter             4 | 4  */
   --text-inset:12px;    /* grid/text-inset        12 | 12 */
   --ease:cubic-bezier(.16,.84,.3,1); /* UI: header, hover */
+  --rise:24px; /* recorrido vertical de la entrada (único valor global) */
+  --stagger:.14; /* s entre hermanos de una misma fila, x --tempo */
   --soft:cubic-bezier(.22,.61,.36,1); /* atmósfera: hero, reveals, fundidos de imagen */
   /* MOTION · escala de Do mayor, entonación justa. Tónica = 0.4s.
      tiempo = 0.4s × razón × 2^octava; razones 1, 9/8, 5/4, 4/3, 3/2, 5/3, 15/8
@@ -168,12 +170,12 @@ footer .row{border-top:1px solid var(--border-default)}
 
 html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}.lenis.lenis-stopped{overflow:hidden}
 /* ---------- reveal (used sparingly) ---------- */
-.rv{opacity:0;filter:blur(2px);transition:opacity calc(1.6s * var(--tempo)) var(--soft),filter calc(1.6s * var(--tempo)) var(--soft)}
-.rv.in{opacity:1;filter:none}
+.rv{opacity:0;transform:translate3d(0,var(--rise),0);transition:opacity calc(1.4s * var(--tempo)) var(--soft),transform calc(1.8s * var(--tempo)) var(--soft)}
+.rv.in{opacity:1;transform:none}
 
 /* ---------- MOBILE (≤768px) · Figma "Landing Mobile Final" 360 ---------- */
 @media (max-width:768px){
-  :root{--gap:64px;--block-gap:36px}
+  :root{--gap:64px;--block-gap:36px;--rise:16px}
   .topbar img{display:none}
   .topbar .txt{display:flex}
   .header{height:48px;margin-bottom:-48px;padding:0 12px}
@@ -390,6 +392,7 @@ La noche, a medida.</p></header>
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const tempo = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--tempo')) || 1;
+  const stagger = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--stagger')) || .14;
   const hero = document.getElementById('hero');
   requestAnimationFrame(() => setTimeout(() => hero.classList.add('in'), 60));
 
@@ -401,7 +404,7 @@ La noche, a medida.</p></header>
     // stagger siblings inside the same row
     if (el.classList.contains('feature')) return; // full width: entra sola, sin retardo
     const sibs = [...el.parentElement.children].filter(c => c.classList.contains('rv'));
-    el.style.transitionDelay = (sibs.indexOf(el) * 0.2 * tempo) + 's';
+    el.style.transitionDelay = (sibs.indexOf(el) * stagger * tempo) + 's';
   });
   // orden: primero el texto del hero, después los módulos (stagger)
   const startReveal = () => document.querySelectorAll('.rv').forEach(el => io.observe(el));
