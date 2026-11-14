@@ -37,6 +37,7 @@ th{font-weight:600;color:var(--fg2)}
 <h2>Intención</h2>
 <p>El movimiento de la landing acompaña, no se exhibe: debe sentirse como una respiración lenta que hace la página más cálida, nunca como un efecto que llame la atención sobre sí mismo.</p>
 <p>La referencia es el tono de Lola Casademunt en Navidad: suave, cuidado y sin prisa. El usuario no debería poder decir qué se ha movido, solo que todo "entra bien".</p>
+<p><strong>Concepto: el movimiento como armonía.</strong> Una pieza suena bien porque sus notas guardan proporciones entre sí; la landing se mueve bien porque todos sus tiempos y distancias guardan las mismas proporciones. El motion está afinado como una escala musical: Do mayor, en entonación justa, con una tónica de 0,4 s. Cada duración es una nota de esa escala, y <code>--tempo</code> es el compás que las acelera o frena a la vez sin desafinarlas. Por eso nada se mueve "porque sí": cada entrada cae en su sitio y el conjunto se siente afinado, aunque nadie sepa por qué.</p>
 <ul>
 <li><strong>Revelar, no animar.</strong> El movimiento sirve para que el contenido aparezca con orden, no para decorarlo.</li>
 <li><strong>Producto primero.</strong> Las fotos y el texto son lo importante; el motion nunca compite con ellos.</li>
@@ -59,7 +60,23 @@ th{font-weight:600;color:var(--fg2)}
 <h2>Tiempo y curvas</h2>
 <p>Todas las duraciones salen de una escala musical (Do mayor, entonación justa) con la tónica en 0,4 s, y un multiplicador global <code>--tempo</code> (0,9) las acelera o frena a la vez sin romper las proporciones.</p>
 <div class="f">t = 0,4 s × r × 2<sup>o</sup></div>
-<p>Con <code>r</code> en 1, 9/8, 5/4, 4/3, 3/2, 5/3 y 15/8, y <code>o</code> la octava. Valores resultantes en segundos: 0,2 · 0,4 · 0,45 · 0,6 · 0,667 · 0,8 · 0,9 · 1 · 1,2 · 1,333 · 1,6 · 2,667. Las distancias siguen la misma lógica desde una base de 120 px: 80 (2/3), 160 (4/3) y 540 (9/8 × 480).</p>
+<p>Con <code>r</code> en 1, 9/8, 5/4, 4/3, 3/2, 5/3 y 15/8, y <code>o</code> la octava. Cada tiempo que usa la página es una nota de esa escala:</p>
+<div class="tw"><table>
+<tr><th>Nota</th><th>Intervalo sobre la tónica</th><th>Segundos</th></tr>
+<tr><td>Do (octava grave)</td><td>1/2</td><td>0,2</td></tr>
+<tr><td>Do (tónica)</td><td>1</td><td>0,4</td></tr>
+<tr><td>Re</td><td>9/8 (segunda)</td><td>0,45</td></tr>
+<tr><td>Sol</td><td>3/2 (quinta)</td><td>0,6</td></tr>
+<tr><td>La</td><td>5/3 (sexta)</td><td>0,667</td></tr>
+<tr><td>Do</td><td>2 (octava)</td><td>0,8</td></tr>
+<tr><td>Re</td><td>9/8 × 2</td><td>0,9</td></tr>
+<tr><td>Mi</td><td>5/4 × 2</td><td>1</td></tr>
+<tr><td>Sol</td><td>3/2 × 2</td><td>1,2</td></tr>
+<tr><td>La</td><td>5/3 × 2</td><td>1,333</td></tr>
+<tr><td>Do</td><td>4</td><td>1,6</td></tr>
+<tr><td>La</td><td>5/3 × 4</td><td>2,667</td></tr>
+</table></div>
+<p>Las distancias siguen la misma lógica desde una base de 120 px: 80 (2/3), 160 (4/3) y 540 (9/8 × 480).</p>
 <div class="tw"><table>
 <tr><th>Curva</th><th>Valor</th><th>Se usa en</th></tr>
 <tr><td><code>--ease</code></td><td>cubic-bezier(.16, .84, .3, 1)</td><td>UI: header, hover de las imágenes de producto</td></tr>
