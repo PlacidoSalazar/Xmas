@@ -16,7 +16,13 @@ Prototipos HTML estáticos de la landing de Navidad FW26. Sin build, sin framewo
 
 ## Responsive
 
-Una sola URL: desktop con `max-width:1432px` centrado; mobile con `@media (max-width:768px)` (Figma "Landing Mobile Final", 360). Hero/feature/look tienen variante mobile con `<picture>` y sufijo `-m.jpg`.
+Una sola URL, **full width** (como Loewe): sin tope de ancho (`--page-max:none`; para limitar, p. ej. `1920px`, y se centra). Mobile con `@media (max-width:768px)` (Figma "Landing Mobile Final", 360). Hero/feature/look tienen variante mobile con `<picture>` y sufijo `-m.jpg`.
+
+- La grid va en porcentajes (`32,96 %` = 472/1432, `49,58 %` = 710/1432) y `aspect-ratio`; así escala sola con la ventana.
+- Hero: `aspect-ratio:1432/810`, `max-height:100svh`, texto al `78,6 %`. En mobile se vuelve `height:640px`.
+- Spacing: `--gap` y `--block-gap` usan `clamp()`: 140 y 80 hasta 1432 y crecen hasta 188 y 107 en 1920 (mobile: 64 y 36, fijos).
+- Ribbon superior: HTML con texto real (Manrope 14px; 12px en mobile) y flechas/cierre en SVG. No volver a la imagen `topbar.png`: `object-fit:cover` la amplía a ancho completo.
+- Texto e iconos son fijos de momento; las alturas de los pies de producto (px) no escalan.
 
 ## Tokens (la fuente de verdad es Figma; el CSS los refleja en `:root`)
 
@@ -29,6 +35,10 @@ Spacing = colección Figma **LC · Spacing** (modos Desktop | Mobile):
 | `--heading-gap` | `space/heading` | 8 | 8 |
 
 El resto (`--inset`, `--gutter`, `--text-inset`) viene de **LC · Spatial**. Tipografía: colección **LC · Typography** (Desktop | Mobile). Si cambia un valor en Figma, cambiar también el `:root` y el override mobile (`@media`) del CSS.
+
+## Tipografía fluida (pendiente)
+
+Plan: cada nivel tiene su mínimo (el actual) y su máximo a partir de 1920, con `clamp()` y `rem` + `vw` (respeta el zoom). Ejemplo para 14→16 entre 1432 y 1920: `clamp(0.875rem, 0.508rem + 0.41vw, 1rem)`. Propuesta inicial (a revisar a ojo): hero título 24→28, título de capítulo 20→24, cuerpo/descripción/banner/precio 14→16, nombre de producto 13→15, tag 12→13. Los pequeños escalan menos para no perder jerarquía. Llevarlo también a LC · Typography en Figma (modo Desktop + modo XL).
 
 ## Motion
 
