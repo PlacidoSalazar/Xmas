@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Motion · intención y principios — Xmas FW26</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fefdfb;--fg:#181716;--fg2:#6e6c69;--line:#e1dfdb;--code:#f4f2ef}
+@media (prefers-color-scheme:dark){:root{--bg:#0f0e0d;--fg:#f3f2f0;--fg2:#a8a49e;--line:#2a2826;--code:#1b1a18}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 16px/1.6 Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:760px;margin:0 auto;padding:64px 16px 96px}
+h1{font-size:32px;line-height:1.2;font-weight:800;margin:0 0 8px}
+h2{font-size:20px;line-height:28px;font-weight:800;margin:56px 0 12px}
+.meta{color:var(--fg2);font-size:14px;margin-bottom:8px}
+p,li{margin:0 0 12px}
+ul,ol{padding-left:22px;margin:0 0 12px}
+code{font:600 13px/1.4 Manrope,system-ui,sans-serif;background:var(--code);padding:1px 5px;border-radius:3px}
+.tw{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;vertical-align:top;padding:10px 12px 10px 0;border-bottom:1px solid var(--line)}
+th{font-weight:600;color:var(--fg2)}
+.f{font:600 15px/1.5 Manrope,system-ui,sans-serif;background:var(--code);padding:12px 16px;border-radius:4px;overflow-x:auto;margin:12px 0}
+</style>
+</head>
+<body>
+<main>
+<h1>Motion · intención y principios</h1>
+<div class="meta">Lola Casademunt · Xmas FW26 · 14 nov 2026 · valores de la V1 (<code>lc-proto/</code>)</div>
+
+<h2>Intención</h2>
+<p>El movimiento de la landing acompaña, no se exhibe: debe sentirse como una respiración lenta que hace la página más cálida, nunca como un efecto que llame la atención sobre sí mismo.</p>
+<p>La referencia es el tono de Lola Casademunt en Navidad: suave, cuidado y sin prisa. El usuario no debería poder decir qué se ha movido, solo que todo "entra bien".</p>
+<ul>
+<li><strong>Revelar, no animar.</strong> El movimiento sirve para que el contenido aparezca con orden, no para decorarlo.</li>
+<li><strong>Producto primero.</strong> Las fotos y el texto son lo importante; el motion nunca compite con ellos.</li>
+<li><strong>Coherencia.</strong> Todo respeta la misma escala de tiempos y las mismas dos curvas, así que la página suena afinada.</li>
+</ul>
+
+<h2>Principios</h2>
+<ol>
+<li><strong>Sutil.</strong> Los desplazamientos son cortos (24 px en desktop, 16 px en mobile). Si se nota la distancia, es demasiado.</li>
+<li><strong>Vertical y suave.</strong> Los elementos entran hacia arriba, sin rotaciones, escalas ni rebotes.</li>
+<li><strong>Escalonado.</strong> Los hermanos de una misma fila entran con un retardo corto y constante (0,14 s × <code>--tempo</code>), de izquierda a derecha.</li>
+<li><strong>Se asienta despacio.</strong> Las curvas arrancan rápido y terminan largo: la respuesta es inmediata y el reposo, lento.</li>
+<li><strong>El scroll dispara, el tiempo anima.</strong> Un elemento entra por tiempo, nunca atado a la posición del scroll, así siempre llega al final aunque el usuario pare.</li>
+<li><strong>Una vez.</strong> Cada reveal ocurre una sola vez; no se repite al subir y bajar.</li>
+<li><strong>Una sola escala.</strong> Ninguna duración ni distancia se inventa: salen de la escala de tiempos y de la base de 120 px.</li>
+<li><strong>El texto quieto.</strong> En el parallax solo se mueven las imágenes, dentro de su marco; el texto no se desplaza.</li>
+<li><strong>Reducir es una opción.</strong> Con <code>prefers-reduced-motion</code> todo aparece sin transición.</li>
+</ol>
+
+<h2>Tiempo y curvas</h2>
+<p>Todas las duraciones salen de una escala musical (Do mayor, entonación justa) con la tónica en 0,4 s, y un multiplicador global <code>--tempo</code> (0,9) las acelera o frena a la vez sin romper las proporciones.</p>
+<div class="f">t = 0,4 s × r × 2<sup>o</sup></div>
+<p>Con <code>r</code> en 1, 9/8, 5/4, 4/3, 3/2, 5/3 y 15/8, y <code>o</code> la octava. Valores resultantes en segundos: 0,2 · 0,4 · 0,45 · 0,6 · 0,667 · 0,8 · 0,9 · 1 · 1,2 · 1,333 · 1,6 · 2,667. Las distancias siguen la misma lógica desde una base de 120 px: 80 (2/3), 160 (4/3) y 540 (9/8 × 480).</p>
+<div class="tw"><table>
+<tr><th>Curva</th><th>Valor</th><th>Se usa en</th></tr>
+<tr><td><code>--ease</code></td><td>cubic-bezier(.16, .84, .3, 1)</td><td>UI: header, hover de las imágenes de producto</td></tr>
+<tr><td><code>--soft</code></td><td>cubic-bezier(.22, .61, .36, 1)</td><td>Atmósfera: hero, reveals, fundidos de imagen</td></tr>
+</table></div>
+<p>Regla práctica: lo que responde a una acción del usuario (hover, header) usa <code>--ease</code>; lo que ocurre por sí solo (entradas, fundidos) usa <code>--soft</code>. Toda duración se escribe como <code>calc(Xs * var(--tempo))</code>.</p>
+
+<h2>Patrones</h2>
+<p>Valores de la V1 (<code>lc-proto/</code>), antes de aplicar <code>--tempo</code> (0,9).</p>
+<div class="tw"><table>
+<tr><th>Patrón</th><th>Qué hace</th><th>Valores</th></tr>
+<tr><td>Hero</td><td>El título y el texto suben 14 px y aparecen en cascada</td><td>1 s, <code>--soft</code>; retardo 0,4 s el título y 0,6 s el texto</td></tr>
+<tr><td>Preloader</td><td>Un brillo gris recorre cada imagen hasta que carga; luego se funde con la foto</td><td>Brillo 1,2 s en bucle; fundido 0,8 s; imagen 0,9 s (hero 1,6 s)</td></tr>
+<tr><td>Reveal vertical</td><td>Los módulos entran subiendo <code>--rise</code> con fundido, en stagger por fila</td><td>Opacidad 1,4 s, transform 1,8 s, <code>--soft</code>; stagger <code>--stagger</code> (0,14 s)</td></tr>
+<tr><td>Hover de producto</td><td>La imagen se transforma dentro de su marco</td><td>1,333 s, <code>--ease</code></td></tr>
+<tr><td>Header</td><td>Se oculta al bajar y reaparece sólido al subir, una vez pasado el hero</td><td>0,4 s color y fondo, 0,45 s desplazamiento, <code>--ease</code></td></tr>
+<tr><td>Blanco → oscuro → blanco</td><td>Fundido del bloque oscuro; el scroll solo lo dispara y el fundido va por tiempo</td><td>Disparadores a 160 px (entrada) y 80 px (salida)</td></tr>
+<tr><td>Scroll suave</td><td>Lenis con inercia larga y salida muy suave</td><td>Duración 1,6 s × <code>--tempo</code>, easing exponencial</td></tr>
+</table></div>
+<p><strong>Orden de entrada.</strong> Primero el texto del hero; los módulos empiezan a observarse 1,6 s × <code>--tempo</code> después, para no competir con él. El umbral de disparo es el 12 % inferior de la pantalla, y cada elemento se observa una sola vez.</p>
+<p><strong>Parallax.</strong> En la V2 editorial será muy minimal: solo en imágenes, entre el 4 % y el 6 % de recorrido, dentro de su marco y con el texto quieto. En mobile se apaga o se reduce a la mitad, y se controla con un único valor global ajustable.</p>
+
+<h2>Mandos</h2>
+<p>Todo el motion se ajusta desde <code>:root</code> en el <code>index.html</code> de cada proyecto, sin tocar el resto del CSS ni del JS.</p>
+<div class="tw"><table>
+<tr><th>Variable</th><th>Valor</th><th>Qué controla</th></tr>
+<tr><td><code>--tempo</code></td><td>0,9</td><td>Multiplica todas las duraciones; menos es más rápido</td></tr>
+<tr><td><code>--rise</code></td><td>24 px (16 px en mobile)</td><td>Recorrido vertical de la entrada</td></tr>
+<tr><td><code>--stagger</code></td><td>0,14</td><td>Segundos entre hermanos de una fila, × <code>--tempo</code></td></tr>
+<tr><td><code>--ease</code></td><td>cubic-bezier(.16, .84, .3, 1)</td><td>Curva de UI</td></tr>
+<tr><td><code>--soft</code></td><td>cubic-bezier(.22, .61, .36, 1)</td><td>Curva de atmósfera</td></tr>
+</table></div>
+<p>Si un valor cambia, se cambia aquí y no en cada regla. El override mobile de <code>--rise</code> vive dentro del <code>@media (max-width: 768px)</code>.</p>
+
+<h2>Accesibilidad y mobile</h2>
+<ul>
+<li><strong><code>prefers-reduced-motion</code>.</strong> Se desactivan las transiciones y los elementos <code>.rv</code> aparecen ya visibles, sin desplazamiento; el brillo del preloader no se anima. Es obligatorio en todo motion nuevo.</li>
+<li><strong>Mobile (≤ 768 px).</strong> El recorrido baja a 16 px (<code>--rise</code>) y el parallax se apaga o se reduce a la mitad. Las tipografías y espacios siguen los modos Mobile de las colecciones de Figma.</li>
+<li><strong>Rendimiento.</strong> Solo se animan <code>opacity</code> y <code>transform</code>, que no provocan reflujo. Se evita <code>filter: blur</code> en imágenes grandes por el coste en iPhone.</li>
+<li><strong>Prueba.</strong> Tras cada cambio de motion, revisar en iPhone Safari, en pestaña privada si hay caché.</li>
+</ul>
+
+<h2>Qué evitar y V1 frente a V2</h2>
+<ul>
+<li>Rebotes, rotaciones, escalas llamativas o entradas desde los lados.</li>
+<li>Duraciones o distancias fuera de la escala, o curvas distintas de <code>--ease</code> y <code>--soft</code>.</li>
+<li>Animaciones ligadas al scroll que se detienen a medias; el scroll solo dispara.</li>
+<li>Mover el texto con parallax, o mover una imagen fuera de su marco.</li>
+<li>Bucles que distraigan; solo el brillo del preloader se repite, y solo mientras carga.</li>
+</ul>
+<div class="tw"><table>
+<tr><th>Versión</th><th>Carpeta</th><th>Estado del motion</th></tr>
+<tr><td>V1</td><td><code>lc-proto/</code></td><td>Reveals verticales con stagger suave, scroll con Lenis, fundido blanco-oscuro-blanco. En revisión.</td></tr>
+<tr><td>V2 editorial</td><td><code>lc-proto-editorial/</code></td><td>Pendiente: broken grid y parallax muy minimal. No se toca todavía.</td></tr>
+</table></div>
+</main>
+</body>
+</html>
