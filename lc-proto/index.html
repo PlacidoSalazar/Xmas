@@ -28,9 +28,10 @@
   --line-height-chapter-label:28px;            /*                      28 | 28 */
   --font-size-chapter-description:14px;        /* Chapter/Description  14 | 14 */
   --line-height-chapter-description:18px;      /*                      18 | 18 */
-  /* spacing tokens = LC · Spatial (Figma): Desktop | Mobile */
-  --gap:140px;          /* layout/chapter-space  140 | 80 */
-  --block-gap:80px;     /* layout/block-gap       80 | 40 */
+  /* spacing tokens = LC · Spacing (Figma): Desktop | Mobile */
+  --gap:140px;          /* space/chapter  140 | 64 */
+  --block-gap:80px;     /* space/block     80 | 32 */
+  --heading-gap:8px;    /* space/heading    8 |  8 */
   --inset:4px;          /* grid/margin             4 | 4  */
   --gutter:4px;         /* grid/gutter             4 | 4  */
   --text-inset:12px;    /* grid/text-inset        12 | 12 */
@@ -77,7 +78,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 .sec{margin-top:var(--gap)}
 .chapter{width:100%;max-width:710px;padding:0 var(--text-inset);margin:0 auto;text-align:center}
 .chapter h2{font-family:var(--font-title);font-weight:var(--font-weight-extrabold);font-size:var(--font-size-chapter-label);line-height:var(--line-height-chapter-label);letter-spacing:var(--letter-spacing-none);text-transform:uppercase;color:var(--fg)}
-.chapter p{font-family:var(--font-body);font-weight:var(--font-weight-regular);font-size:var(--font-size-chapter-description);line-height:var(--line-height-chapter-description);color:var(--fg2);margin-top:8px;white-space:pre-line}
+.chapter p{font-family:var(--font-body);font-weight:var(--font-weight-regular);font-size:var(--font-size-chapter-description);line-height:var(--line-height-chapter-description);color:var(--fg2);margin-top:var(--heading-gap);white-space:pre-line}
 .chapter + .grid,.chapter + .lookbook{margin-top:var(--block-gap)}
 
 .grid{display:flex;justify-content:center;align-items:flex-start;gap:var(--gutter)}
@@ -172,7 +173,7 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
 
 /* ---------- MOBILE (≤768px) · Figma "Landing Mobile Final" 360 ---------- */
 @media (max-width:768px){
-  :root{--gap:80px;--block-gap:40px}
+  :root{--gap:64px;--block-gap:32px}
   .topbar img{display:none}
   .topbar .txt{display:flex}
   .header{height:48px;margin-bottom:-48px;padding:0 12px}
