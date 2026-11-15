@@ -36,9 +36,20 @@ Spacing = colección Figma **LC · Spacing** (modos Desktop | Mobile):
 
 El resto (`--inset`, `--gutter`, `--text-inset`) viene de **LC · Spatial**. Tipografía: colección **LC · Typography** (Desktop | Mobile). Si cambia un valor en Figma, cambiar también el `:root` y el override mobile (`@media`) del CSS.
 
-## Tipografía fluida (pendiente)
+## Tipografía fluida (hecha en `lc-proto`)
 
-Plan: cada nivel tiene su mínimo (el actual) y su máximo a partir de 1920, con `clamp()` y `rem` + `vw` (respeta el zoom). Ejemplo para 14→16 entre 1432 y 1920: `clamp(0.875rem, 0.508rem + 0.41vw, 1rem)`. Propuesta inicial (a revisar a ojo): hero título 24→28, título de capítulo 20→24, cuerpo/descripción/banner/precio 14→16, nombre de producto 13→15, tag 12→13. Los pequeños escalan menos para no perder jerarquía. Llevarlo también a LC · Typography en Figma (modo Desktop + modo XL).
+Todos los niveles escalan con el mismo factor, 16/14 (≈1,143), entre 1432 y 1920 (`clamp()` con `rem` + `vw`, respeta el zoom). Por debajo de 1432 y en mobile se quedan en el mínimo (el de Figma); por encima de 1920, en el máximo. Valores en px enteros, tamaño / interlínea:
+
+| Nivel | Mín | Máx |
+|---|---|---|
+| Hero título, news h3 | 24/28 | 27/32 |
+| Título de capítulo, footer b | 20/28 (footer 20/24) | 23/32 (footer 23/27) |
+| Cuerpo, precio, banner | 14/18 | 16/21 |
+| Nombre de producto | 13/16 | 15/18 |
+| Texto de footer | 16/20 | 18/23 |
+| Tag, legal | 12/16 | 14/18 |
+
+El pie de las cards tipo look (`.card.look .meta`) crece también (60 → 69). Pendiente: aplicarlo a `lc-proto-editorial` y llevarlo a LC · Typography en Figma (modo Desktop + modo XL).
 
 ## Motion
 
