@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Prototipo · Landing XMAS EDIT · V3</title>
+<title>Prototipo · Landing XMAS EDIT · V2 editorial</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&family=Schibsted+Grotesk:wght@400&display=swap" rel="stylesheet">
 <style>
@@ -24,10 +24,10 @@
   --font-weight-regular:400;                   /* font-weight/regular */
   --font-weight-extrabold:800;                 /* font-weight/extrabold */
   --letter-spacing-none:0;                     /* letter-spacing/none */
-  --font-size-chapter-label:20px;              /* Chapter/Label        20 | 20 */
-  --line-height-chapter-label:28px;            /*                      28 | 28 */
-  --font-size-chapter-description:14px;        /* Chapter/Description  14 | 14 */
-  --line-height-chapter-description:18px;      /*                      18 | 18 */
+  --font-size-chapter-label:clamp(1.25rem,0.700rem + 0.615vw,1.4375rem);              /* Chapter/Label        20 | 20 */
+  --line-height-chapter-label:clamp(1.75rem,1.016rem + 0.820vw,2rem);            /*                      28 | 28 */
+  --font-size-chapter-description:clamp(0.875rem,0.508rem + 0.410vw,1rem);        /* Chapter/Description  14 | 14 */
+  --line-height-chapter-description:clamp(1.125rem,0.575rem + 0.615vw,1.3125rem);      /*                      18 | 18 */
   /* spacing tokens = LC · Spacing (Figma): Desktop | Mobile */
   --page-max:none;      /* full width: sin tope. Para limitar, p. ej. 1920px (se centra a partir de ahí) */
   --gap:clamp(140px,9.78vw,188px);       /* space/chapter  140 | 64 · crece solo por encima de 1432 */
@@ -37,6 +37,9 @@
   --gutter:4px;         /* grid/gutter             4 | 4  */
   --text-inset:12px;    /* grid/text-inset        12 | 12 */
   --ease:cubic-bezier(.16,.84,.3,1); /* UI: header, hover */
+  --parallax:3.5; /* % máx. de desplazamiento de la imagen dentro de su marco (único valor global; 0 = apagado) */
+  --rise:24px; /* recorrido vertical de la entrada (único valor global) */
+  --stagger:.14; /* s entre hermanos de una misma fila, x --tempo */
   --soft:cubic-bezier(.22,.61,.36,1); /* atmósfera: hero, reveals, fundidos de imagen */
   /* MOTION · escala de Do mayor, entonación justa. Tónica = 0.4s.
      tiempo = 0.4s × razón × 2^octava; razones 1, 9/8, 5/4, 4/3, 3/2, 5/3, 15/8
@@ -55,7 +58,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 /* ---------- header ---------- */
 .topbar{height:32px;background:var(--surface-dark);position:relative;z-index:30}
 .topbar img{display:none}
-.topbar .txt{display:flex;height:32px;align-items:center;justify-content:center;color:var(--on-dark);font-size:14px;line-height:18px;padding:0 64px;text-align:center}
+.topbar .txt{display:flex;height:32px;align-items:center;justify-content:center;color:var(--on-dark);font-size:clamp(0.875rem,0.508rem + 0.410vw,1rem);line-height:clamp(1.125rem,0.575rem + 0.615vw,1.3125rem);padding:0 64px;text-align:center}
 .topbar .tb-nav,.topbar .tb-close{position:absolute;top:0;height:32px;display:flex;align-items:center;gap:16px;color:var(--on-dark)}
 .topbar .tb-nav{left:24px}.topbar .tb-close{right:24px}
 .header{position:sticky;top:0;height:64px;margin-bottom:-64px;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:0 40px;color:#fefdfb;transition:color calc(.4s * var(--tempo)) var(--ease),background-color calc(.4s * var(--tempo)) var(--ease),transform calc(.45s * var(--tempo)) var(--ease)}
@@ -71,8 +74,8 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 .hero .media picture{display:block;width:100%;height:100%}
 .hero .media{position:absolute;inset:0}
 .hero .copy{position:absolute;left:0;right:0;top:78.6%;text-align:center}
-.hero h1{font-weight:800;font-size:24px;line-height:28px;text-transform:uppercase}
-.hero p{font-size:14px;line-height:19px;margin-top:8px}
+.hero h1{font-weight:800;font-size:clamp(1.5rem,0.950rem + 0.615vw,1.6875rem);line-height:clamp(1.75rem,1.016rem + 0.820vw,2rem);text-transform:uppercase}
+.hero p{font-size:clamp(0.875rem,0.508rem + 0.410vw,1rem);line-height:clamp(1.1875rem,0.637rem + 0.615vw,1.375rem);margin-top:8px}
 .hero .copy>*{opacity:0;transform:translateY(14px);transition:opacity calc(1s * var(--tempo)) var(--soft),transform calc(1s * var(--tempo)) var(--soft)}
 .hero.in .copy h1{opacity:1;transform:none;transition-delay:calc(.4s * var(--tempo))}
 .hero.in .copy p{opacity:1;transform:none;transition-delay:calc(.6s * var(--tempo))}
@@ -93,10 +96,10 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 .card.big .ph{aspect-ratio:710/1065}
 .card .ph img{transition:transform calc(1.333s * var(--tempo)) var(--ease)}
 .card .meta{padding:16px var(--text-inset) 0;height:106px}  /* 814 − 708 */
-.card.look .meta{height:60px}                                /* 768 − 708 */
-.name{font-size:13px;line-height:16px;color:var(--fg)}
-.price{font-size:14px;line-height:18px;color:var(--fg2);margin-top:4px}
-.look .name{font-size:14px;line-height:18px}
+.card.look .meta{height:clamp(3.75rem,2.099rem + 1.844vw,4.3125rem)}                                /* 768 − 708 */
+.name{font-size:clamp(0.8125rem,0.446rem + 0.410vw,0.9375rem);line-height:clamp(1rem,0.633rem + 0.410vw,1.125rem);color:var(--fg)}
+.price{font-size:clamp(0.875rem,0.508rem + 0.410vw,1rem);line-height:clamp(1.125rem,0.575rem + 0.615vw,1.3125rem);color:var(--fg2);margin-top:4px}
+.look .name{font-size:clamp(0.875rem,0.508rem + 0.410vw,1rem);line-height:clamp(1.125rem,0.575rem + 0.615vw,1.3125rem)}
 .look .price{margin-top:8px}
 
 /* feature image */
@@ -115,18 +118,33 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 @media (prefers-reduced-motion:reduce){.ph:not(.ready)::before,.feature:not(.ready)::before,.hero .media:not(.ready)::before{animation:none}}
 .feature{width:calc(100% - 2 * var(--inset));aspect-ratio:1424/1068;margin-left:var(--inset);margin-right:var(--inset);overflow:hidden}
 
+/* ---------- broken grid (editorial) ----------
+   Figma: 2 columnas de 472 (32,96 %) con margen de 123 (8,59 %) a cada lado; la columna "low" baja 200 (13,97 %).
+   Los márgenes en % se resuelven sobre el ancho del contenedor, así que todo escala con la ventana. */
+.grid.split{justify-content:space-between;align-items:flex-start}
+.grid.split .card:first-child{margin-left:8.59%}
+.grid.split .card:last-child{margin-right:8.59%}
+.grid.split .card.low{margin-top:13.97%}
+.lookbook.rev{flex-direction:row-reverse}
+
+/* ---------- parallax editorial: solo imágenes, dentro del marco, texto quieto ----------
+   La imagen va ampliada un 10 % (5 % de colchón arriba y abajo) y se desplaza dentro del marco con el scroll. */
+.card .ph img,.card .ph video,.look-img .ph img,.feature img{transition:opacity calc(.9s * var(--tempo)) var(--soft)}
+.px img,.px video{transform:translate3d(0,calc(var(--py,0) * 1%),0) scale(1.1);will-change:transform}
+@media (prefers-reduced-motion:reduce){.px img,.px video{transform:none}}
+
 /* lookbook */
 .lookbook{display:flex;align-items:stretch;gap:var(--gutter);padding:0 var(--inset)}
 .lookbook .look-img{flex:1 1 0;min-width:0;display:flex;flex-direction:column}
 .lookbook .look-img .ph{flex:1 1 auto;min-height:0;overflow:hidden} /* ocupa el alto de la rejilla de items menos el meta: borde inferior alineado con la última fila */
 .lookbook .look-img .meta{height:126px;padding:16px var(--text-inset) 0;font-family:'Schibsted Grotesk',Manrope,sans-serif}
-.lookbook .look-img .name{font-size:14px;line-height:17px}
-.lookbook .look-img .price{margin-top:8px;line-height:17px}
+.lookbook .look-img .name{font-size:clamp(0.875rem,0.508rem + 0.410vw,1rem);line-height:clamp(1.0625rem,0.696rem + 0.410vw,1.1875rem)}
+.lookbook .look-img .price{margin-top:8px;line-height:clamp(1.0625rem,0.696rem + 0.410vw,1.1875rem)}
 .lookbook .prods{flex:1 1 0;min-width:0;display:grid;grid-template-columns:1fr 1fr;gap:var(--gutter);align-content:start}
 .pcard .ph{aspect-ratio:353/530;overflow:hidden;background:var(--surface-product)}
 .pcard .ph img{transition:transform calc(1.333s * var(--tempo)) var(--ease)}
 .pcard .meta{padding:16px var(--text-inset) 0;height:126px}
-.tag{font-size:12px;line-height:16px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--fg2)}
+.tag{font-size:clamp(0.75rem,0.383rem + 0.410vw,0.875rem);line-height:clamp(1rem,0.633rem + 0.410vw,1.125rem);font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--fg2)}
 .pcard .name{margin-top:4px}
 .pcard .price{margin-top:4px}
 .sw{display:flex;gap:6px;margin-top:14px}
@@ -139,7 +157,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 /* gifts */
 .gifts-head{display:flex;justify-content:space-between;align-items:baseline;padding:0 16px}
 .gifts-head h2{font-family:var(--font-title);font-weight:var(--font-weight-extrabold);font-size:var(--font-size-chapter-label);line-height:var(--line-height-chapter-label);text-transform:uppercase}
-.gifts-head a{font-size:14px;line-height:18px;text-decoration:underline;text-underline-offset:3px}
+.gifts-head a{font-size:clamp(0.875rem,0.508rem + 0.410vw,1rem);line-height:clamp(1.125rem,0.575rem + 0.615vw,1.3125rem);text-decoration:underline;text-underline-offset:3px}
 .gifts{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--gutter);padding:0 var(--inset);margin-top:24px}
 .gifts .pcard .meta{height:98px}
 
@@ -152,37 +170,36 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 footer{margin-top:var(--gap);color:var(--light-fg);background:var(--light-bg)}
 footer .row{border-top:1px solid var(--border-default)}
 .usp{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;padding:80px 40px;text-align:center}
-.usp b{display:block;font-weight:600;font-size:20px;line-height:24px}
-.usp span{display:block;font-size:16px;line-height:20px;color:var(--light-fg2);margin-top:8px}
+.usp b{display:block;font-weight:600;font-size:clamp(1.25rem,0.700rem + 0.615vw,1.4375rem);line-height:clamp(1.5rem,0.950rem + 0.615vw,1.6875rem)}
+.usp span{display:block;font-size:clamp(1rem,0.633rem + 0.410vw,1.125rem);line-height:clamp(1.25rem,0.700rem + 0.615vw,1.4375rem);color:var(--light-fg2);margin-top:8px}
 .news{padding:80px 0;text-align:center}
-.news small{font-weight:600;font-size:14px;line-height:20px;letter-spacing:1px}
-.news h3{font-weight:600;font-size:24px;line-height:28px;width:100%;max-width:768px;margin:12px auto 0}
+.news small{font-weight:600;font-size:clamp(0.875rem,0.508rem + 0.410vw,1rem);line-height:clamp(1.25rem,0.700rem + 0.615vw,1.4375rem);letter-spacing:1px}
+.news h3{font-weight:600;font-size:clamp(1.5rem,0.950rem + 0.615vw,1.6875rem);line-height:clamp(1.75rem,1.016rem + 0.820vw,2rem);width:100%;max-width:768px;margin:12px auto 0}
 .news form{display:flex;justify-content:center;gap:16px;margin-top:32px}
 .news input{width:280px;border:0;border-bottom:1px solid #b9b6b1;background:none;font:14px/18px Manrope;padding:8px 0;color:var(--light-fg)}
 .news button{background:var(--surface-dark);color:#fefdfb;border:0;font:14px/20px Manrope;padding:8px 12px;cursor:pointer}
 .links{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;padding:80px 40px}
-.links b{display:block;font-weight:600;font-size:20px;line-height:24px;margin-bottom:12px}
-.links a{display:block;font-size:16px;line-height:20px;color:var(--light-fg2);margin-top:12px}
+.links b{display:block;font-weight:600;font-size:clamp(1.25rem,0.700rem + 0.615vw,1.4375rem);line-height:clamp(1.5rem,0.950rem + 0.615vw,1.6875rem);margin-bottom:12px}
+.links a{display:block;font-size:clamp(1rem,0.633rem + 0.410vw,1.125rem);line-height:clamp(1.25rem,0.700rem + 0.615vw,1.4375rem);color:var(--light-fg2);margin-top:12px}
 .links a:hover{color:var(--light-fg)}
 .brand{padding:80px 40px 40px}
 .brand .logo{width:100%;color:var(--light-fg)}
 .brand .logo svg{width:100%;height:auto;display:block}
-.legal{display:flex;justify-content:space-between;font-size:12px;line-height:16px;margin-top:40px}
+.legal{display:flex;justify-content:space-between;font-size:clamp(0.75rem,0.383rem + 0.410vw,0.875rem);line-height:clamp(1rem,0.633rem + 0.410vw,1.125rem);margin-top:40px}
 
 html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}.lenis.lenis-stopped{overflow:hidden}
 /* ---------- reveal (used sparingly) ---------- */
-.rv{opacity:0;filter:blur(2px);transition:opacity calc(1.6s * var(--tempo)) var(--soft),filter calc(1.6s * var(--tempo)) var(--soft)}
-.rv.in{opacity:1;filter:none}
+.rv{opacity:0;transform:translate3d(0,var(--rise),0);transition:opacity calc(1.4s * var(--tempo)) var(--soft),transform calc(1.8s * var(--tempo)) var(--soft)}
+.rv.in{opacity:1;transform:none}
 
 /* ---------- MOBILE (≤768px) · Figma "Landing Mobile Final" 360 ---------- */
 @media (max-width:768px){
-  :root{--gap:64px;--block-gap:36px}
-  .hero{aspect-ratio:auto}
+  :root{--gap:64px;--block-gap:36px;--rise:16px}
   .topbar img{display:none}
   .topbar .txt{display:flex;font-size:12px;line-height:16px;padding:0 12px}
   .topbar .tb-nav,.topbar .tb-close{display:none}
   .header{height:48px;margin-bottom:-48px;padding:0 12px}
-  .hero{height:640px;margin-top:0}
+  .hero{height:100vh;height:100svh;min-height:640px;aspect-ratio:auto;max-height:none;margin-top:-80px}  /* 100% viewport; sube por detrás del ribbon (32) y del header (48): los márgenes negativos colapsan, por eso -80 */
   .hero .copy{top:auto;bottom:80px;padding:0 24px}
   .hero h1{font-size:20px;line-height:28px}  /* Figma mobile: hero title 20/28 */
   .grid{padding:0 var(--inset)}
@@ -191,7 +208,11 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
   .card.big{flex:0 0 100%}
   .card.big .ph{aspect-ratio:2/3}
   .feature{aspect-ratio:2/3}
-  .lookbook{flex-direction:column}
+  .lookbook,.lookbook.rev{flex-direction:column}
+  .grid.split .card:first-child{margin-left:0}
+  .grid.split .card:last-child{margin-right:0}
+  .grid.split .card.low{margin-top:0}
+  .px img,.px video{transform:translate3d(0,calc(var(--py,0) * 1%),0) scale(1.06)}
   .lookbook .look-img .ph{flex:none;aspect-ratio:2/3}
   .lookbook .look-img .meta{height:auto;padding-bottom:24px}  /* Figma: 16 + texto 38 + 24 */
   .lookbook .prods{flex:none}
@@ -242,7 +263,7 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
 
   <!-- HERO -->
   <section class="hero" id="hero">
-    <div class="media"><picture><source media="(max-width:768px)" srcset="img/hero-m.jpg"><img src="img/hero.jpg" alt=""></picture></div>
+    <div class="media"><picture><source media="(max-width:768px)" srcset="img/hero-m.jpg?v=2"><img src="img/hero.jpg" alt=""></picture></div>
     <div class="copy">
       <h1>xMas Edit</h1>
       <p>Navidad, sin rodeos.<br>Cada uno con su mood.<br>Regalos para todos.</p>
@@ -254,12 +275,16 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
     <header class="chapter rv"><h2>Punto</h2><p>Punto fino, de los de siempre.
 Encaje y strass donde toca.
 Cómodo, y se nota.</p></header>
-    <div class="grid">
+    <div class="grid split">
       <a class="card rv" href="#"><div class="ph"><img src="img/punto-1.jpg" alt=""></div><div class="meta"><div class="name">Cárdigan de encaje</div><div class="price">120,00 €</div><div class="sw plp"><i class="on"></i></div></div></a>
-      <a class="card look rv" href="#"><div class="ph"><img src="img/punto-2.jpg" alt=""></div><div class="meta"><div class="name">Compra el look</div><div class="price">N productos</div></div></a>
+      <a class="card low look rv" href="#"><div class="ph"><img src="img/punto-2.jpg" alt=""></div><div class="meta"><div class="name">Compra el look</div><div class="price">N productos</div></div></a>
     </div>
     <div class="grid">
       <a class="card big rv" href="#"><div class="ph"><video src="video/punto.mp4" poster="img/punto-big.jpg" autoplay muted loop playsinline preload="metadata"></video></div><div class="meta"><div class="name">Jersey de punto con encaje</div><div class="price">120,00 €</div><div class="sw plp"><i class="on"></i></div></div></a>
+    </div>
+    <div class="grid split">
+      <a class="card rv" href="#"><div class="ph"><img src="img/punto-1.jpg" alt=""></div><div class="meta"><div class="name">Cárdigan de encaje</div><div class="price">120,00 €</div><div class="sw plp"><i class="on"></i></div></div></a>
+      <a class="card low look rv" href="#"><div class="ph"><img src="img/punto-2.jpg" alt=""></div><div class="meta"><div class="name">Compra el look</div><div class="price">N productos</div></div></a>
     </div>
   </section>
 
@@ -270,26 +295,17 @@ Cómodo, y se nota.</p></header>
     <header class="chapter rv"><h2>Instinto</h2><p>Animal print con intención.
 Estampado, textura y carácter.
 Lo salvaje, bien llevado.</p></header>
-    <div class="grid">
+    <div class="grid split">
       <a class="card look rv" href="#"><div class="ph"><img src="img/inst-1.jpg" alt=""></div><div class="meta"><div class="name">Compra el look</div><div class="price">N productos</div></div></a>
-      <a class="card rv" href="#"><div class="ph"><img src="img/inst-2.jpg" alt=""></div><div class="meta"><div class="name">Camisa de estampado animal</div><div class="price">120,00 €</div><div class="sw plp"><i class="on"></i></div></div></a>
+      <a class="card low rv" href="#"><div class="ph"><img src="img/inst-2.jpg" alt=""></div><div class="meta"><div class="name">Camisa de estampado animal</div><div class="price">120,00 €</div><div class="sw plp"><i class="on"></i></div></div></a>
+    </div>
+    <div class="grid split">
+      <a class="card look rv" href="#"><div class="ph"><img src="img/inst-1.jpg" alt=""></div><div class="meta"><div class="name">Compra el look</div><div class="price">N productos</div></div></a>
+      <a class="card low rv" href="#"><div class="ph"><img src="img/inst-2.jpg" alt=""></div><div class="meta"><div class="name">Camisa de estampado animal</div><div class="price">120,00 €</div><div class="sw plp"><i class="on"></i></div></div></a>
     </div>
   </section>
 
-  <div class="sec feature rv" data-parallax><picture><source media="(max-width:768px)" srcset="img/feat-2-m.jpg?v=2"><img src="img/feat-2.jpg" alt=""></picture></div>
-
-  <!-- SATÉN -->
-  <section class="sec">
-    <header class="chapter rv"><h2>Satén</h2><p>Satén, sin más.
-Caída, brillo suave y corte limpio.
-Una luz suave, en voz baja.</p></header>
-    <div class="grid">
-      <a class="card rv" href="#"><div class="ph"><img src="img/saten-1.jpg" alt=""></div><div class="meta"><div class="name">Americana de satén</div><div class="price">120,00 €</div><div class="sw plp"><i class="on"></i></div></div></a>
-      <a class="card look rv" href="#"><div class="ph"><img src="img/saten-2.jpg" alt=""></div><div class="meta"><div class="name">Compra el look</div><div class="price">N productos</div></div></a>
-    </div>
-  </section>
-
-  <div class="sec feature rv" data-parallax><picture><source media="(max-width:768px)" srcset="img/feat-3-m.jpg"><img src="img/feat-3.jpg" alt=""></picture></div>
+  <div class="sec feature rv" data-parallax><picture><source media="(max-width:768px)" srcset="img/feat-2-m.jpg?v=2"><img src="img/feat-2.jpg?v=2" alt=""></picture></div>
 
   <!-- ============ DARK BAND ============ -->
   <div class="sec band-dark" id="dark">
@@ -299,11 +315,11 @@ Una luz suave, en voz baja.</p></header>
       <header class="chapter rv"><h2>Brillo</h2><p>Lentejuelas con ocasión.
 Un destello, sin avisar.
 Luz que se queda en la ropa.</p></header>
-      <div class="grid">
-        <a class="card look rv" href="#"><div class="ph"><img src="img/brillo-1.jpg" alt=""></div><div class="meta"><div class="name">Compra el look</div><div class="price">N productos</div></div></a>
+      <div class="grid split">
+        <a class="card low look rv" href="#"><div class="ph"><img src="img/brillo-1.jpg" alt=""></div><div class="meta"><div class="name">Compra el look</div><div class="price">N productos</div></div></a>
         <a class="card rv" href="#"><div class="ph"><img src="img/brillo-2.jpg" alt=""></div><div class="meta"><div class="name">Top de encaje</div><div class="price">120,00 €</div><div class="sw plp"><i class="on"></i></div></div></a>
       </div>
-      <div class="lookbook" style="margin-top:var(--block-gap)">
+      <div class="lookbook rev" style="margin-top:var(--block-gap)">
         <a class="look-img rv" href="#"><div class="ph"><picture><source media="(max-width:768px)" srcset="img/brillo-look-m.jpg"><img src="img/brillo-look.jpg" alt=""></picture></div><div class="meta"><div class="name">Compra el look</div><div class="price">N productos</div></div></a>
         <div class="prods">
           <a class="pcard rv" href="#"><div class="ph"><img src="img/brillo-p1.jpg?v=2" alt=""></div><div class="meta"><div class="tag">Nuevo</div><div class="name">Bolso</div><div class="price">180,00 €</div><div class="sw"><i class="on"></i></div></div></a>
@@ -314,7 +330,7 @@ Luz que se queda en la ropa.</p></header>
       </div>
     </section>
 
-    <div class="sec feature rv" data-parallax><picture><source media="(max-width:768px)" srcset="img/feat-4-m.jpg?v=2"><img src="img/feat-4.jpg?v=2" alt=""></picture></div>
+    <div class="sec feature rv" data-parallax><picture><source media="(max-width:768px)" srcset="img/feat-5-m.jpg"><img src="img/feat-5.jpg" alt=""></picture></div>
 
     <!-- TOTAL BLACK -->
     <section class="sec">
@@ -331,8 +347,6 @@ La noche, a medida.</p></header>
         </div>
       </div>
     </section>
-
-    <div class="sec feature rv" data-parallax><picture><source media="(max-width:768px)" srcset="img/feat-5-m.jpg"><img src="img/feat-5.jpg" alt=""></picture></div>
   </div>
   <!-- ============ /DARK BAND ============ -->
 
@@ -395,6 +409,7 @@ La noche, a medida.</p></header>
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const tempo = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--tempo')) || 1;
+  const stagger = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--stagger')) || .14;
   const hero = document.getElementById('hero');
   requestAnimationFrame(() => setTimeout(() => hero.classList.add('in'), 60));
 
@@ -406,7 +421,7 @@ La noche, a medida.</p></header>
     // stagger siblings inside the same row
     if (el.classList.contains('feature')) return; // full width: entra sola, sin retardo
     const sibs = [...el.parentElement.children].filter(c => c.classList.contains('rv'));
-    el.style.transitionDelay = (sibs.indexOf(el) * 0.2 * tempo) + 's';
+    el.style.transitionDelay = (sibs.indexOf(el) * stagger * tempo) + 's';
   });
   // orden: primero el texto del hero, después los módulos (stagger)
   const startReveal = () => document.querySelectorAll('.rv').forEach(el => io.observe(el));
@@ -451,7 +466,10 @@ La noche, a medida.</p></header>
     from = cur; to = v; t0 = performance.now();
     if (!anim){ anim = true; requestAnimationFrame(step); }
   }
-  const feats = [...document.querySelectorAll('[data-parallax]')];
+  // Parallax editorial: solo imágenes (marcos .ph / .feature), desplazamiento dentro del marco. El texto no se mueve.
+  const PX = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--parallax')) || 0;
+  const feats = reduce || !PX ? [] : [...document.querySelectorAll('.card .ph, .look-img .ph, .feature')];
+  feats.forEach(el => { el.classList.add('px'); el.dataset.sp = el.closest('.low') ? '1.3' : '1'; }); // la columna que baja se mueve un poco más: rompe el ritmo
 
   function frame(){
     const vh = innerHeight;
@@ -463,6 +481,8 @@ La noche, a medida.</p></header>
       const b = f.getBoundingClientRect();
       if (b.bottom < -200 || b.top > vh + 200) continue;
       const p = (b.top + b.height/2 - vh/2) / (vh + b.height); // -0.5..0.5
+      const k = (innerWidth <= 768 ? .5 : 1) * PX * parseFloat(f.dataset.sp);
+      f.style.setProperty('--py', (-p * 2 * k).toFixed(3));
     }
     const y = scrollY, past = hero.getBoundingClientRect().bottom < 64;
     if (!past){ hdr.classList.remove('solid','hide'); }

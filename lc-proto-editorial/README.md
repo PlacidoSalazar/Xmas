@@ -1,15 +1,19 @@
 # LC · Landing XMAS EDIT · Prototipo V2 editorial
 
-Prototipo HTML estático V2 editorial (copia de lc-proto; responsive, desktop 1432px). Sin build.
+Prototipo HTML estático de la V2 editorial (broken grid + parallax sutil). Responsive en una sola URL, full width. Sin build.
+Pensado para enseñar cómo se puede romper la grid del template actual y consultarlo con la agencia.
 
 - `index.html` — página completa (CSS + JS inline, Lenis por CDN, fuentes de Google Fonts)
-- `img/`, `video/` — assets exportados de Figma
+- `img/`, `video/` — assets exportados de Figma (frame "Landing Xmas Editorial")
+
+## Qué cambia respecto a `lc-proto`
+- **Broken grid** (`.grid.split`): dos columnas de 472 px (32,96 %) con margen de 123 px (8,59 %); la columna `.low` baja 200 px (13,97 %). Módulo central de 710 px entre medias. En Brillo la columna que baja es la izquierda, y el lookbook va invertido (`.lookbook.rev`).
+- **Secciones** como en el Figma: Punto → foto grande → Instinto → foto grande → bloque oscuro (Brillo → foto grande → Total Black) → regalos → footer. Sin capítulo Satén.
+- **Parallax** (solo imágenes, texto quieto): `--parallax:3.5` en `:root` es el único valor global (% de desplazamiento de la imagen dentro de su marco; `0` lo apaga). La columna `.low` se mueve un 30 % más. En móvil va a la mitad. Se desactiva con `prefers-reduced-motion`.
+- Mobile (≤768px): la grid asimétrica se apila en una columna, sin desfase.
 
 ## Deploy en Vercel
-1. Sube esta carpeta a un repo de GitHub.
-2. Vercel → Add New Project → importa el repo.
-3. Framework Preset: **Other**. Sin build command ni output directory.
-4. Deploy.
+Proyecto propio, Root Directory = `lc-proto-editorial`, Framework: **Other**, sin build.
 
 ## Local
 `npx serve .`
