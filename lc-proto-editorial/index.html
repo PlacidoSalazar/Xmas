@@ -38,7 +38,6 @@
   --text-inset:12px;    /* grid/text-inset        12 | 12 */
   --ease:cubic-bezier(.16,.84,.3,1); /* UI: header, hover */
   --parallax:.08; /* diferencia de velocidad respecto al scroll entre columnas de una grid rota: la card "low" va al 92 % y la otra al 104 % (único valor global; 0 = apagado) */
-  --parallax-ease:.1; /* inercia: 0-1, fracción del recorrido que avanza por fotograma (menor = más lento y suave) */
   --rise:24px; /* recorrido vertical de la entrada (único valor global) */
   --stagger:.14; /* s entre hermanos de una misma fila, x --tempo */
   --soft:cubic-bezier(.22,.61,.36,1); /* atmósfera: hero, reveals, fundidos de imagen */
@@ -130,9 +129,9 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 
 /* ---------- parallax editorial: las cards de las grids rotas se mueven a distinta velocidad ----------
    Se desplaza la card entera (foto + texto + precio), sin máscara ni escala: las fotos siempre al 100 %.
-   Usa la propiedad `translate`, independiente de `transform` (que ya usa el reveal). --py va en px enteros (foto nítida). */
-.grid.split .card{translate:0 calc(var(--py,0) * 1px)}
-@media (prefers-reduced-motion:reduce){.grid.split .card{translate:none}}
+   Se escribe `style.translate` directamente (propiedad independiente de `transform`, que ya usa el reveal): sin variables CSS heredadas. */
+.grid.split .card{will-change:translate}
+@media (prefers-reduced-motion:reduce){.grid.split .card{translate:none!important}}
 
 /* lookbook */
 .lookbook{display:flex;align-items:stretch;gap:var(--gutter);padding:0 var(--inset)}
@@ -324,9 +323,9 @@ Luz que se queda en la ropa.</p></header>
         <a class="look-img rv" href="#"><div class="ph"><picture><source media="(max-width:768px)" srcset="img/brillo-look-m.jpg"><img src="img/brillo-look.jpg" alt=""></picture></div><div class="meta"><div class="name">Compra el look</div><div class="price">N productos</div></div></a>
         <div class="prods">
           <a class="pcard rv" href="#"><div class="ph"><img src="img/brillo-p1.jpg?v=2" alt=""></div><div class="meta"><div class="tag">Nuevo</div><div class="name">Bolso</div><div class="price">180,00 €</div><div class="sw"><i class="on"></i></div></div></a>
-          <a class="pcard rv" href="#"><div class="ph"><img src="img/brillo-p2.jpg" alt=""></div><div class="meta"><div class="tag">Nuevo</div><div class="name">Jersey de lentejuelas</div><div class="price">180,00 €</div><div class="sw"><i class="on"></i></div></div></a>
-          <a class="pcard rv" href="#"><div class="ph"><img src="img/brillo-p3.jpg" alt=""></div><div class="meta"><div class="tag">Nuevo</div><div class="name">Vaquero ancho gris</div><div class="price">180,00 €</div><div class="sw"><i class="on"></i></div></div></a>
-          <a class="pcard rv" href="#"><div class="ph"><img src="img/brillo-p4.jpg" alt=""></div><div class="meta"><div class="tag">Nuevo</div><div class="name">Zapato destalonado</div><div class="price">180,00 €</div><div class="sw"><i class="on"></i></div></div></a>
+          <a class="pcard rv" href="#"><div class="ph"><img src="img/brillo-p2.jpg?v=2" alt=""></div><div class="meta"><div class="tag">Nuevo</div><div class="name">Jersey de lentejuelas</div><div class="price">180,00 €</div><div class="sw"><i class="on"></i></div></div></a>
+          <a class="pcard rv" href="#"><div class="ph"><img src="img/brillo-p3.jpg?v=2" alt=""></div><div class="meta"><div class="tag">Nuevo</div><div class="name">Vaquero ancho gris</div><div class="price">180,00 €</div><div class="sw"><i class="on"></i></div></div></a>
+          <a class="pcard rv" href="#"><div class="ph"><img src="img/brillo-p4.jpg?v=2" alt=""></div><div class="meta"><div class="tag">Nuevo</div><div class="name">Zapato destalonado</div><div class="price">180,00 €</div><div class="sw"><i class="on"></i></div></div></a>
         </div>
       </div>
     </section>
@@ -342,9 +341,9 @@ La noche, a medida.</p></header>
         <a class="look-img rv" href="#"><div class="ph"><picture><source media="(max-width:768px)" srcset="img/tb-look-m.jpg"><img src="img/tb-look.jpg" alt=""></picture></div><div class="meta"><div class="name">Compra el look</div><div class="price">N productos</div></div></a>
         <div class="prods">
           <a class="pcard rv" href="#"><div class="ph"><img src="img/brillo-p1.jpg?v=2" alt=""></div><div class="meta"><div class="tag">Nuevo</div><div class="name">Bolso</div><div class="price">180,00 €</div><div class="sw"><i class="on"></i></div></div></a>
-          <a class="pcard rv" href="#"><div class="ph"><img src="img/tb-p2.jpg" alt=""></div><div class="meta"><div class="tag">Nuevo</div><div class="name">Pantalón</div><div class="price">180,00 €</div><div class="sw"><i class="on"></i></div></div></a>
-          <a class="pcard rv" href="#"><div class="ph"><img src="img/tb-p3.jpg" alt=""></div><div class="meta"><div class="tag">Nuevo</div><div class="name">Cárdigan de lentejuelas</div><div class="price">180,00 €</div><div class="sw"><i class="on"></i></div></div></a>
-          <a class="pcard rv" href="#"><div class="ph"><img src="img/brillo-p4.jpg" alt=""></div><div class="meta"><div class="tag">Nuevo</div><div class="name">Zapato destalonado</div><div class="price">180,00 €</div><div class="sw"><i class="on"></i></div></div></a>
+          <a class="pcard rv" href="#"><div class="ph"><img src="img/tb-p2.jpg?v=2" alt=""></div><div class="meta"><div class="tag">Nuevo</div><div class="name">Pantalón</div><div class="price">180,00 €</div><div class="sw"><i class="on"></i></div></div></a>
+          <a class="pcard rv" href="#"><div class="ph"><img src="img/tb-p3.jpg?v=2" alt=""></div><div class="meta"><div class="tag">Nuevo</div><div class="name">Cárdigan de lentejuelas</div><div class="price">180,00 €</div><div class="sw"><i class="on"></i></div></div></a>
+          <a class="pcard rv" href="#"><div class="ph"><img src="img/brillo-p4.jpg?v=2" alt=""></div><div class="meta"><div class="tag">Nuevo</div><div class="name">Zapato destalonado</div><div class="price">180,00 €</div><div class="sw"><i class="on"></i></div></div></a>
         </div>
       </div>
     </section>
@@ -468,42 +467,38 @@ La noche, a medida.</p></header>
     if (!anim){ anim = true; requestAnimationFrame(step); }
   }
   // Parallax editorial: las cards de las grids rotas (.grid.split) se mueven a distinta velocidad.
-  // Se desplaza la card entera con la propiedad CSS `translate` (sin máscara ni escala).
+  // Se desplaza la card entera con la propiedad CSS `translate` (sin máscara ni escala). Lenis ya suaviza el scroll, así que no hay inercia propia.
   // --parallax = diferencia de velocidad respecto al scroll: la card .low va más lenta (+) y la otra algo más rápida (−0,5×).
+  // Rendimiento: las posiciones se miden una vez (carga, resize, cambios de alto) y en cada scroll solo se hacen cuentas y escrituras, sin leer el DOM.
   const PX = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--parallax')) || 0;
   const feats = reduce || !PX ? [] : [...document.querySelectorAll('.grid.split .card')];
-  feats.forEach(el => { el.dataset.sp = el.classList.contains('low') ? '1' : '-.5'; });
-
-  // inercia: la card se acerca a su objetivo en cada fotograma (easing exponencial), así el parallax flota en vez de seguir el scroll en seco
-  const EASE = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--parallax-ease')) || .1;
-  let moving = false;
-  function glide(){
-    let more = false;
-    for (const f of feats){
-      if (f._t === undefined) continue;
-      const d = f._t - f._c;
-      if (Math.abs(d) < .3){ if (d) { f._c = f._t; f.style.setProperty('--py', Math.round(f._c)); } continue; }
-      f._c += d * EASE; more = true;
-      f.style.setProperty('--py', Math.round(f._c));
-    }
-    if (more) requestAnimationFrame(glide); else moving = false;
+  feats.forEach(el => { el._sp = el.classList.contains('low') ? 1 : -.5; });
+  function measure(){
+    feats.forEach(f => { f.style.translate = ''; });
+    feats.forEach(f => { const r = f.getBoundingClientRect(); f._cy = r.top + scrollY + r.height/2; f._hh = r.height/2; });
+    parallax();
   }
-  function kick(){ if (!moving && feats.length){ moving = true; requestAnimationFrame(glide); } }
+  function parallax(){
+    const vh = innerHeight, k0 = innerWidth <= 768 ? 0 : PX;
+    for (const f of feats){
+      const d = f._cy - scrollY - vh/2;                      // distancia del centro de la card al centro de la pantalla
+      if (Math.abs(d) > vh/2 + f._hh + 300){ continue; }      // fuera de pantalla: no se toca
+      f.style.translate = k0 ? '0 ' + (-d * k0 * f._sp).toFixed(2) + 'px' : '';
+    }
+  }
+  if (feats.length){
+    addEventListener('load', measure);
+    addEventListener('resize', measure);
+    if (window.ResizeObserver) new ResizeObserver(measure).observe(document.getElementById('page'));
+  }
+
   function frame(){
     const vh = innerHeight;
     const r = dark.getBoundingClientRect();
     // oscuro mientras el bloque esté dentro: entra al cruzar IN_AT y vuelve a blanco cuando la última foto ya ha pasado
     setTarget(r.top < vh - IN_AT && r.bottom > vh + OUT_AT ? 1 : 0);
 
-    if (!reduce) for (const f of feats){
-      const b = f.getBoundingClientRect();
-      const nat = b.top + b.height/2 - (f._c || 0);          // centro de la card sin el desplazamiento actual
-      if (nat + b.height/2 < -300 || nat - b.height/2 > vh + 300) continue;
-      const k = innerWidth <= 768 ? 0 : PX * parseFloat(f.dataset.sp);
-      f._t = -(nat - vh/2) * k;                               // objetivo en px: 0 cuando la card está centrada en pantalla
-      if (f._c === undefined){ f._c = f._t; f.style.setProperty('--py', Math.round(f._c)); } // primera vez: se coloca sin animar (sin salto)
-    }
-    kick();
+    parallax();
     const y = scrollY, past = hero.getBoundingClientRect().bottom < 64;
     if (!past){ hdr.classList.remove('solid','hide'); }
     else if (y > lastY + 4){ hdr.classList.add('hide'); }
