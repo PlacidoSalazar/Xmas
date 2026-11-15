@@ -183,7 +183,7 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
   .topbar .txt{display:flex;font-size:12px;line-height:16px;padding:0 12px}
   .topbar .tb-nav,.topbar .tb-close{display:none}
   .header{height:48px;margin-bottom:-48px;padding:0 12px}
-  .hero{height:640px;aspect-ratio:auto;max-height:none;margin-top:0}
+  .hero{height:max(640px,calc(100vh - 32px));height:max(640px,calc(100svh - 32px));aspect-ratio:auto;max-height:none;margin-top:0}  /* llena el viewport (menos ribbon 32); mínimo 640 = Figma */
   .hero .copy{top:auto;bottom:80px;padding:0 24px}
   .hero h1{font-size:20px;line-height:28px}  /* Figma mobile: hero title 20/28 */
   .grid{padding:0 var(--inset)}
