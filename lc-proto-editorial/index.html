@@ -37,7 +37,7 @@
   --gutter:4px;         /* grid/gutter             4 | 4  */
   --text-inset:12px;    /* grid/text-inset        12 | 12 */
   --ease:cubic-bezier(.16,.84,.3,1); /* UI: header, hover */
-  --parallax:5; /* % máx. de desplazamiento de la imagen dentro de su marco (único valor global; 0 = apagado) */
+  --parallax:.08; /* diferencia de velocidad respecto al scroll entre columnas de una grid rota: la card "low" va al 92 % y la otra al 104 % (único valor global; 0 = apagado) */
   --parallax-ease:.1; /* inercia: 0-1, fracción del recorrido que avanza por fotograma (menor = más lento y suave) */
   --rise:24px; /* recorrido vertical de la entrada (único valor global) */
   --stagger:.14; /* s entre hermanos de una misma fila, x --tempo */
@@ -128,11 +128,11 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 .grid.split .card.low{margin-top:13.97%}
 .lookbook.rev{flex-direction:row-reverse}
 
-/* ---------- parallax editorial: solo imágenes, dentro del marco, texto quieto ----------
-   La imagen va ampliada un 14 % (7 % de colchón arriba y abajo) y se desplaza dentro del marco con el scroll. */
-.card .ph img,.card .ph video,.look-img .ph img,.feature img{transition:opacity calc(.9s * var(--tempo)) var(--soft)}
-.px img,.px video{transform:translate3d(0,calc(var(--py,0) * 1%),0) scale(1.14);will-change:transform}
-@media (prefers-reduced-motion:reduce){.px img,.px video{transform:none}}
+/* ---------- parallax editorial: las cards de las grids rotas se mueven a distinta velocidad ----------
+   Se desplaza la card entera (foto + texto + precio), sin máscara ni escala: las fotos siempre al 100 %.
+   Usa la propiedad `translate`, independiente de `transform` (que ya usa el reveal). --py va en px enteros (foto nítida). */
+.grid.split .card{translate:0 calc(var(--py,0) * 1px)}
+@media (prefers-reduced-motion:reduce){.grid.split .card{translate:none}}
 
 /* lookbook */
 .lookbook{display:flex;align-items:stretch;gap:var(--gutter);padding:0 var(--inset)}
@@ -213,7 +213,7 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
   .grid.split .card:first-child{margin-left:0}
   .grid.split .card:last-child{margin-right:0}
   .grid.split .card.low{margin-top:0}
-  .px img,.px video{transform:translate3d(0,calc(var(--py,0) * 1%),0) scale(1.08)}
+  .grid.split .card{translate:none}  /* móvil: sin parallax (una columna) */
   .lookbook .look-img .ph{flex:none;aspect-ratio:2/3}
   .lookbook .look-img .meta{height:auto;padding-bottom:24px}  /* Figma: 16 + texto 38 + 24 */
   .lookbook .prods{flex:none}
@@ -467,12 +467,14 @@ La noche, a medida.</p></header>
     from = cur; to = v; t0 = performance.now();
     if (!anim){ anim = true; requestAnimationFrame(step); }
   }
-  // Parallax editorial: solo imágenes (marcos .ph / .feature), desplazamiento dentro del marco. El texto no se mueve.
+  // Parallax editorial: las cards de las grids rotas (.grid.split) se mueven a distinta velocidad.
+  // Se desplaza la card entera con la propiedad CSS `translate` (sin máscara ni escala).
+  // --parallax = diferencia de velocidad respecto al scroll: la card .low va más lenta (+) y la otra algo más rápida (−0,5×).
   const PX = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--parallax')) || 0;
-  const feats = reduce || !PX ? [] : [...document.querySelectorAll('.card .ph, .look-img .ph, .feature')];
-  feats.forEach(el => { el.classList.add('px'); el.dataset.sp = el.closest('.low') ? '1.35' : el.closest('.split') ? '.7' : '1'; }); // la columna que baja se mueve ~2x más rápido que la que no baja: refuerza el desfase (máx. 5 × 1,35 = 6,75 % < 7 % de colchón)
+  const feats = reduce || !PX ? [] : [...document.querySelectorAll('.grid.split .card')];
+  feats.forEach(el => { el.dataset.sp = el.classList.contains('low') ? '1' : '-.5'; });
 
-  // inercia: la imagen se acerca a su objetivo en cada fotograma (easing exponencial), así el parallax flota en vez de seguir el scroll en seco
+  // inercia: la card se acerca a su objetivo en cada fotograma (easing exponencial), así el parallax flota en vez de seguir el scroll en seco
   const EASE = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--parallax-ease')) || .1;
   let moving = false;
   function glide(){
@@ -480,9 +482,9 @@ La noche, a medida.</p></header>
     for (const f of feats){
       if (f._t === undefined) continue;
       const d = f._t - f._c;
-      if (Math.abs(d) < .004){ if (d) { f._c = f._t; f.style.setProperty('--py', f._c.toFixed(3)); } continue; }
+      if (Math.abs(d) < .3){ if (d) { f._c = f._t; f.style.setProperty('--py', Math.round(f._c)); } continue; }
       f._c += d * EASE; more = true;
-      f.style.setProperty('--py', f._c.toFixed(3));
+      f.style.setProperty('--py', Math.round(f._c));
     }
     if (more) requestAnimationFrame(glide); else moving = false;
   }
@@ -495,11 +497,11 @@ La noche, a medida.</p></header>
 
     if (!reduce) for (const f of feats){
       const b = f.getBoundingClientRect();
-      if (b.bottom < -200 || b.top > vh + 200) continue;
-      const p = (b.top + b.height/2 - vh/2) / (vh + b.height); // -0.5..0.5
-      const k = (innerWidth <= 768 ? .5 : 1) * PX * parseFloat(f.dataset.sp);
-      f._t = -p * 2 * k;                       // objetivo
-      if (f._c === undefined){ f._c = f._t; f.style.setProperty('--py', f._c.toFixed(3)); } // primera vez: se coloca sin animar (sin salto)
+      const nat = b.top + b.height/2 - (f._c || 0);          // centro de la card sin el desplazamiento actual
+      if (nat + b.height/2 < -300 || nat - b.height/2 > vh + 300) continue;
+      const k = innerWidth <= 768 ? 0 : PX * parseFloat(f.dataset.sp);
+      f._t = -(nat - vh/2) * k;                               // objetivo en px: 0 cuando la card está centrada en pantalla
+      if (f._c === undefined){ f._c = f._t; f.style.setProperty('--py', Math.round(f._c)); } // primera vez: se coloca sin animar (sin salto)
     }
     kick();
     const y = scrollY, past = hero.getBoundingClientRect().bottom < 64;
