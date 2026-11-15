@@ -37,7 +37,7 @@
   --gutter:4px;         /* grid/gutter             4 | 4  */
   --text-inset:12px;    /* grid/text-inset        12 | 12 */
   --ease:cubic-bezier(.16,.84,.3,1); /* UI: header, hover */
-  --parallax:.08; /* diferencia de velocidad respecto al scroll entre columnas de una grid rota: la card "low" va al 92 % y la otra al 104 % (único valor global; 0 = apagado) */
+  --parallax:.1; /* cuánto se retrasa la card "low" al entrar, como fracción de su distancia al punto de llegada (la otra card, ×0,35). Al llegar, todas quedan en su sitio del Figma. 0 = apagado */
   --rise:24px; /* recorrido vertical de la entrada (único valor global) */
   --stagger:.14; /* s entre hermanos de una misma fila, x --tempo */
   --soft:cubic-bezier(.22,.61,.36,1); /* atmósfera: hero, reveals, fundidos de imagen */
@@ -468,11 +468,12 @@ La noche, a medida.</p></header>
   }
   // Parallax editorial: las cards de las grids rotas (.grid.split) se mueven a distinta velocidad.
   // Se desplaza la card entera con la propiedad CSS `translate` (sin máscara ni escala). Lenis ya suaviza el scroll, así que no hay inercia propia.
-  // --parallax = diferencia de velocidad respecto al scroll: la card .low va más lenta (+) y la otra algo más rápida (−0,5×).
+  // Todas las cards acaban EXACTAMENTE en su sitio del Figma: solo se retrasan mientras entran por abajo y el desfase llega a 0 en la línea de llegada (60 % del alto de pantalla); después ya no se mueven.
+  // La card .low se retrasa --parallax × distancia; la otra, ×0,35: llegan a distinta velocidad y nunca se adelantan (así no se acercan a las vecinas).
   // Rendimiento: las posiciones se miden una vez (carga, resize, cambios de alto) y en cada scroll solo se hacen cuentas y escrituras, sin leer el DOM.
   const PX = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--parallax')) || 0;
   const feats = reduce || !PX ? [] : [...document.querySelectorAll('.grid.split .card')];
-  feats.forEach(el => { el._sp = el.classList.contains('low') ? 1 : -.5; });
+  feats.forEach(el => { el._sp = el.classList.contains('low') ? 1 : .35; });
   function measure(){
     feats.forEach(f => { f.style.translate = ''; });
     feats.forEach(f => { const r = f.getBoundingClientRect(); f._cy = r.top + scrollY + r.height/2; f._hh = r.height/2; });
@@ -481,9 +482,10 @@ La noche, a medida.</p></header>
   function parallax(){
     const vh = innerHeight, k0 = innerWidth <= 768 ? 0 : PX;
     for (const f of feats){
-      const d = f._cy - scrollY - vh/2;                      // distancia del centro de la card al centro de la pantalla
-      if (Math.abs(d) > vh/2 + f._hh + 300){ continue; }      // fuera de pantalla: no se toca
-      f.style.translate = k0 ? '0 ' + (-d * k0 * f._sp).toFixed(2) + 'px' : '';
+      const d = f._cy - scrollY - vh*.6;                      // distancia del centro de la card a la línea de llegada (60 % del alto de pantalla); >0 = aún por llegar
+      if (d > vh/2 + f._hh + 300){ continue; }                // todavía lejos, por debajo de la pantalla: no se toca
+      const off = d > 0 ? d * k0 * f._sp : 0;                 // solo se retrasa (hacia abajo); al llegar = 0 = posición del Figma
+      f.style.translate = off > .05 ? '0 ' + off.toFixed(2) + 'px' : '';
     }
   }
   if (feats.length){
