@@ -126,7 +126,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 .grid.split .card:first-child{margin-left:8.59%}
 .grid.split .card:last-child{margin-right:8.59%}
 .grid.split .card.low{margin-top:13.97%}
-.lookbook.rev{flex-direction:row-reverse}
+.lookbook.rev .look-img{grid-column:3/5}
 
 /* ---------- parallax editorial: las cards de las grids rotas se mueven a distinta velocidad ----------
    Se desplaza la card entera (foto + texto + precio), sin máscara ni escala: las fotos siempre al 100 %.
@@ -135,13 +135,17 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 @media (prefers-reduced-motion:reduce){.grid.split .card{translate:none!important}}
 
 /* lookbook */
-.lookbook{display:flex;align-items:stretch;gap:var(--gutter);padding:0 var(--inset)}
-.lookbook .look-img{flex:1 1 0;min-width:0;display:flex;flex-direction:column}
-.lookbook .look-img .ph{flex:1 1 auto;min-height:0;overflow:hidden} /* ocupa el alto de la rejilla de items menos el meta: borde inferior alineado con la última fila */
+/* desktop: look e items comparten 4 filas (ph1 · meta1 · ph2 · meta2) con subgrid, así el borde inferior de la card grande coincide SIEMPRE con la última fila (sin redondeos de flex/aspect-ratio) */
+.lookbook{display:grid;grid-template-columns:repeat(4,1fr);column-gap:var(--gutter);row-gap:0;padding:0 var(--inset)}
+.lookbook .look-img{grid-column:1/3;grid-row:1/5;display:grid;grid-template-rows:subgrid;min-width:0}
+.lookbook .look-img .ph{grid-row:1/4;min-height:0;overflow:hidden}
+.lookbook .look-img .meta{grid-row:4}
+.lookbook .prods{display:contents}
+.lookbook .pcard{grid-row:span 2;display:grid;grid-template-rows:subgrid;min-width:0}
+.lookbook .pcard:nth-child(-n+2) .meta{height:calc(126px + var(--gutter))}  /* absorbe el hueco entre filas */
 .lookbook .look-img .meta{height:126px;padding:16px var(--text-inset) 0;font-family:'Schibsted Grotesk',Manrope,sans-serif}
 .lookbook .look-img .name{font-size:clamp(0.875rem,0.508rem + 0.410vw,1rem);line-height:clamp(1.0625rem,0.696rem + 0.410vw,1.1875rem)}
 .lookbook .look-img .price{margin-top:8px;line-height:clamp(1.0625rem,0.696rem + 0.410vw,1.1875rem)}
-.lookbook .prods{flex:1 1 0;min-width:0;display:grid;grid-template-columns:1fr 1fr;gap:var(--gutter);align-content:start}
 .pcard .ph{aspect-ratio:353/530;overflow:hidden;background:var(--surface-product)}
 .pcard .ph img{transition:transform calc(1.333s * var(--tempo)) var(--ease)}
 .pcard .meta{padding:16px var(--text-inset) 0;height:126px}
@@ -210,7 +214,12 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
   .card.big{flex:0 0 100%}
   .card.big .ph{aspect-ratio:2/3}
   .feature{aspect-ratio:2/3}
-  .lookbook,.lookbook.rev{flex-direction:column}
+  .lookbook,.lookbook.rev{display:flex;flex-direction:column}
+  .lookbook{row-gap:var(--gutter)}
+  .lookbook .look-img{display:flex;flex-direction:column}
+  .lookbook .prods{display:grid;grid-template-columns:1fr 1fr;gap:var(--gutter)}
+  .lookbook .pcard{display:block}
+  .lookbook .pcard:nth-child(-n+2) .meta{height:auto}
   .grid.split .card:first-child{margin-left:0}
   .grid.split .card:last-child{margin-right:0}
   .grid.split .card.low{margin-top:0}
