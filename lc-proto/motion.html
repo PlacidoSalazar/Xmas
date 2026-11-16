@@ -48,7 +48,7 @@ th{font-weight:600;color:var(--fg2)}
 <ol>
 <li><strong>Sutil.</strong> Los desplazamientos son cortos (24 px en desktop, 16 px en mobile). Si se nota la distancia, es demasiado.</li>
 <li><strong>Vertical y suave.</strong> Los elementos entran hacia arriba, sin rotaciones, escalas ni rebotes.</li>
-<li><strong>Escalonado.</strong> Los hermanos de una misma fila entran con un retardo corto y constante (0,14 s × <code>--tempo</code>), de izquierda a derecha.</li>
+<li><strong>Escalonado.</strong> Los hermanos de una misma fila entran con un retardo corto y constante (0,18 s × <code>--tempo</code>), de izquierda a derecha.</li>
 <li><strong>Se asienta despacio.</strong> Las curvas arrancan rápido y terminan largo: la respuesta es inmediata y el reposo, lento.</li>
 <li><strong>El scroll dispara, el tiempo anima.</strong> Un elemento entra por tiempo, nunca atado a la posición del scroll, así siempre llega al final aunque el usuario pare.</li>
 <li><strong>Una vez.</strong> Cada reveal ocurre una sola vez; no se repite al subir y bajar.</li>
@@ -90,14 +90,14 @@ th{font-weight:600;color:var(--fg2)}
 <tr><th>Patrón</th><th>Qué hace</th><th>Valores</th></tr>
 <tr><td>Hero</td><td>El título y el texto suben 14 px y aparecen en cascada</td><td>1 s, <code>--soft</code>; retardo 0,4 s el título y 0,6 s el texto</td></tr>
 <tr><td>Preloader</td><td>Un brillo gris recorre cada imagen hasta que carga; luego se funde con la foto</td><td>Brillo 1,2 s en bucle; fundido 0,8 s; imagen 0,9 s (hero 1,6 s)</td></tr>
-<tr><td>Reveal vertical</td><td>Los módulos entran subiendo <code>--rise</code> con fundido, en stagger por fila</td><td>Opacidad 1,4 s, transform 1,8 s, <code>--soft</code>; stagger <code>--stagger</code> (0,14 s)</td></tr>
+<tr><td>Reveal vertical</td><td>Los módulos entran subiendo <code>--rise</code> con fundido, en stagger por fila</td><td>Opacidad 1,4 s, transform 1,8 s, <code>--soft</code>; stagger <code>--stagger</code> (0,18 s)</td></tr>
 <tr><td>Hover de producto</td><td>La imagen se transforma dentro de su marco</td><td>1,333 s, <code>--ease</code></td></tr>
 <tr><td>Header</td><td>Se oculta al bajar y reaparece sólido al subir, una vez pasado el hero</td><td>0,4 s color y fondo, 0,45 s desplazamiento, <code>--ease</code></td></tr>
 <tr><td>Blanco → oscuro → blanco</td><td>Fundido del bloque oscuro; el scroll solo lo dispara y el fundido va por tiempo</td><td>Disparadores a 160 px (entrada) y 80 px (salida)</td></tr>
 <tr><td>Scroll suave</td><td>Lenis con inercia larga y salida muy suave</td><td>Duración 1,6 s × <code>--tempo</code>, easing exponencial</td></tr>
 </table></div>
 <p><strong>Orden de entrada.</strong> Primero el texto del hero; los módulos empiezan a observarse 1,6 s × <code>--tempo</code> después, para no competir con él. El umbral de disparo es el 12 % inferior de la pantalla, y cada elemento se observa una sola vez.</p>
-<p><strong>Parallax.</strong> En la V2 editorial será muy minimal: solo en imágenes, entre el 4 % y el 6 % de recorrido, dentro de su marco y con el texto quieto. En mobile se apaga o se reduce a la mitad, y se controla con un único valor global ajustable.</p>
+<p><strong>Parallax.</strong> En la V2 editorial es muy minimal y se controla con un único valor global, <code>--parallax</code> (0,1). Las cards de las grids rotas llegan a su sitio a distinta velocidad: la card baja se retrasa <code>--parallax</code> × su distancia al punto de llegada y la otra, ×0,35, de modo que nunca se adelantan ni se acercan a las vecinas; al llegar, todas quedan donde indica el Figma. En mobile (una columna) está apagado.</p>
 
 <h2>Mandos</h2>
 <p>Todo el motion se ajusta desde <code>:root</code> en el <code>index.html</code> de cada proyecto, sin tocar el resto del CSS ni del JS.</p>
@@ -105,7 +105,7 @@ th{font-weight:600;color:var(--fg2)}
 <tr><th>Variable</th><th>Valor</th><th>Qué controla</th></tr>
 <tr><td><code>--tempo</code></td><td>0,9</td><td>Multiplica todas las duraciones; menos es más rápido</td></tr>
 <tr><td><code>--rise</code></td><td>24 px (16 px en mobile)</td><td>Recorrido vertical de la entrada</td></tr>
-<tr><td><code>--stagger</code></td><td>0,14</td><td>Segundos entre hermanos de una fila, × <code>--tempo</code></td></tr>
+<tr><td><code>--stagger</code></td><td>0,18</td><td>Segundos entre hermanos de una fila, × <code>--tempo</code></td></tr>
 <tr><td><code>--ease</code></td><td>cubic-bezier(.16, .84, .3, 1)</td><td>Curva de UI</td></tr>
 <tr><td><code>--soft</code></td><td>cubic-bezier(.22, .61, .36, 1)</td><td>Curva de atmósfera</td></tr>
 </table></div>
@@ -130,7 +130,7 @@ th{font-weight:600;color:var(--fg2)}
 <div class="tw"><table>
 <tr><th>Versión</th><th>Carpeta</th><th>Estado del motion</th></tr>
 <tr><td>V1</td><td><code>lc-proto/</code></td><td>Reveals verticales con stagger suave, scroll con Lenis, fundido blanco-oscuro-blanco. En revisión.</td></tr>
-<tr><td>V2 editorial</td><td><code>lc-proto-editorial/</code></td><td>Pendiente: broken grid y parallax muy minimal. No se toca todavía.</td></tr>
+<tr><td>V2 editorial</td><td><code>lc-proto-editorial/</code></td><td>Broken grid asimétrica y parallax muy minimal (<code>--parallax</code>). Mismo stagger y escala musical que la V1. En revisión.</td></tr>
 </table></div>
 </main>
 </body>
