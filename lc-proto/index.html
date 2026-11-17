@@ -154,6 +154,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid curre
 /* dark band paddings (from Figma wrappers) */
 .band-dark{padding:var(--gap) 0 80px}
 .band-dark > .sec:first-child{margin-top:0}
+@media (min-width:769px){.band-dark{margin-top:calc(var(--gap) * 3 / 7);padding-top:calc(var(--gap) * 4 / 7)}}  /* Figma desktop: SATÉN → BRILLO = 140 (60 + 80), antes 280 */
 .after-dark{margin-top:0}
 
 /* ---------- footer ---------- */
